@@ -1,8 +1,8 @@
 <template>
   <div>
     <Search></Search>
-    <ShopHeader></ShopHeader>
-    <GoodsDetailNav></GoodsDetailNav>
+<!--    <ShopHeader></ShopHeader>
+    <GoodsDetailNav></GoodsDetailNav> -->
     <div class="shop-item-path">
       <div class="shop-nav-container">
         <Breadcrumb>
@@ -15,7 +15,7 @@
     <!-- 商品信息展示 -->
     <ShowGoods></ShowGoods>
     <!-- 商品详细展示 -->
-    <ShowGoodsDetail></ShowGoodsDetail>
+   <ShowGoodsDetail></ShowGoodsDetail>
     <Spin size="large" fix v-if="isLoading"></Spin>
   </div>
 </template>

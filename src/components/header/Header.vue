@@ -18,13 +18,13 @@
         </li>
       </ul>
       <ul class="detail">
-        <li class="first" v-show="!userInfo.username">
+        <li class="first" v-show="!userInfo.tname">
           你好，请<router-link to="/login">登录 <Icon type="person"></Icon></router-link> |<span class="text-color-red"><router-link to="/SignUp">免费注册 <Icon type="person-add"></Icon></router-link></span>
         </li>
-        <li v-show="!!userInfo.username">
+        <li v-show="!!userInfo.tname">
           <Dropdown>
             <p class="username-p">
-              <Avatar class="person-icon" icon="person" size="small" /> <span class="username">{{userInfo.username}} </span>
+              <Avatar class="person-icon" icon="person" size="small" /> <span class="username">{{userInfo.tname}} </span>
             </p>
             <DropdownMenu slot="list">
                 <div class="my-page">
@@ -130,7 +130,8 @@ export default {
     },
     signOutFun () {
       this.signOut();
-      this.$router.push('/');
+      this.$Message.success('成功退出！');
+      this.$router.push('/Login');
     }
   },
   store

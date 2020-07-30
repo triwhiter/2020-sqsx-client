@@ -59,16 +59,25 @@ export default {
     ...mapMutations(['SET_USER_LOGIN_INFO']),
     ...mapActions(['login']),
     handleSubmit (name) {
+      // this.$http.get('/summer/teacher/getById/2006118801')
+      //   .then((response) => {
+      //     console.log(response.data);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
       const father = this;
-      console.log(this.formDate.username);
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.login(father.formDate).then(result => {
-            if (result) {
-              this.$Message.success('登录成功');
+          this.$http.get('/summer/teacher/login/' + this.formDate.username + '/' + this.formDate.password).then((response) => {
+            if (response.data.code === 200) {
+              let res = response.data;
+              console.log(res.data.tname);
+              this.$Message.success(response.data.msg);
+              this.login(res.data);
               father.$router.push('/');
             } else {
-              this.$Message.error('用户名或密码错误');
+              this.$Message.error(response.data.msg);
             }
           });
         } else {

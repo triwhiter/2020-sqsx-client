@@ -5,7 +5,9 @@ import App from './App';
 import router from './router';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+import HttpRequest from './http.js';
 
+Vue.prototype.$http = HttpRequest;
 Vue.use(iView);
 Vue.config.productionTip = false;
 

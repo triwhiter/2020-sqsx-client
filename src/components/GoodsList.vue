@@ -17,7 +17,7 @@
       <GoodsClassNav></GoodsClassNav>
       <!-- 商品展示容器 -->
       <div class="goods-box">
-        <div class="as-box">
+        <!-- <div class="as-box">
           <div class="item-as-title">
             <span>商品精选</span>
             <span>广告</span>
@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-        <div class="goods-list-box">
+        --><div class="goods-list-box">
           <div class="goods-list-tool">
             <ul>
               <li v-for="(item,index) in goodsTool" :key="index" @click="orderBy(item.en, index)"><span :class="{ 'goods-list-tool-active': isAction[index]}">{{item.title}} <Icon :type="icon[index]"></Icon></span></li>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="goods-page">
+     <div class="goods-page">
         <Page :total="100" show-sizer></Page>
       </div>
     </div>
@@ -199,7 +199,7 @@ export default {
 /* ---------------商品栏开始------------------- */
 .goods-list-box {
   margin-left: 15px;
-  width: calc(100% - 215px);
+/*  width: calc(100% - 215px); */
 }
 .goods-list-tool{
   width: 100%;

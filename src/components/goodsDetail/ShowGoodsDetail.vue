@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="item-intro-show">
-      <div class="item-intro-recommend">
+     <!-- <div class="item-intro-recommend">
         <div class="item-recommend-title">
           <p>店铺热销</p>
         </div>
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-      <div class="item-intro-detail" ref="itemIntroDetail">
+      --><div class="item-intro-detail" ref="itemIntroDetail">
         <div class="item-intro-nav item-tabs">
           <Tabs>
             <TabPane label="商品介绍">
@@ -197,8 +197,8 @@ export default {
   font-weight: bolder;
 }
 .item-intro-detail{
-  margin-left: 30px;
-  width: calc(80vw - 300px);
+/*  margin-left: 30px;
+  width: calc(80vw - 300px); */
 }
 .item-intro-nav{
   width: 100%;

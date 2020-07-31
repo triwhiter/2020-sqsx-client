@@ -71,7 +71,7 @@ export default {
 /*****************************底 部 开 始*****************************/
 .footer {
   width: 100%;
-  height: 390px;
+  height: auto;
   margin-top: 30px;
   background-color: #eaeaea;
 }

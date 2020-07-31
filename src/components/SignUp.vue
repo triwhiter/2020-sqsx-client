@@ -24,7 +24,6 @@
         </div>
       </i-col>
     </Row>
-    <Footer></Footer>
   </div>
 </template>
 

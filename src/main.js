@@ -5,7 +5,7 @@ import App from './App';
 import router from './router';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
-import HttpRequest from './http.js';
+import HttpRequest from './api/http.js';
 
 Vue.prototype.$http = HttpRequest;
 Vue.use(iView);

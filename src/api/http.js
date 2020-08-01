@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 // 设置后端api路径
-Axios.defaults.baseURL = 'http://localhost:8088';
+Axios.defaults.baseURL = 'http://localhost:8088/api';
 // Axios.defaults.headers['Access-Control-Allow-Origin'] = '*'
 // Axios.defaults.headers['Access-Control-Allow-Methods'] = 'POST'
 // Axios.defaults.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'

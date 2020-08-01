@@ -18,13 +18,13 @@
         </li>
       </ul>
       <ul class="detail">
-        <li class="first" v-show="!userInfo.tname">
+        <li class="first" v-show="!userInfo.nickName">
           你好，请<router-link to="/login">登录 <Icon type="person"></Icon></router-link> |<span class="text-color-red"><router-link to="/SignUp">免费注册 <Icon type="person-add"></Icon></router-link></span>
         </li>
-        <li v-show="!!userInfo.tname">
+        <li v-show="!!userInfo.nickName">
           <Dropdown>
             <p class="username-p">
-              <Avatar class="person-icon" icon="person" size="small" /> <span class="username">{{userInfo.tname}} </span>
+              <Avatar class="person-icon" icon="person" size="small" /> <span class="username">{{userInfo.nickName}} </span>
             </p>
             <DropdownMenu slot="list">
                 <div class="my-page">

@@ -59,20 +59,20 @@ export default {
     ...mapMutations(['SET_USER_LOGIN_INFO']),
     ...mapActions(['login']),
     handleSubmit (name) {
-      // const father = this;
+      const father = this;
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$http.post('/login').then((response) => {
+          this.$http.post('/login', this.formDate).then((response) => {
             console.log(response);
-            // if (response.data.code === 200) {
-            //   let res = response.data;
-            //   console.log(res.data.tname);
-            //   this.$Message.success(response.data.msg);
-            //   this.login(res.data);
-            //   father.$router.push('/');
-            // } else {
-            //   this.$Message.error(response.data.msg);
-            // }
+            if (response.data.code === 200) {
+              var res = response.data;
+              console.log(res.data);
+              this.$Message.success(res.msg);
+              this.login(res.data);
+              father.$router.push('/');
+            } else {
+              this.$Message.error(res.msg);
+            }
           });
         } else {
           this.$Message.error('请填写正确的用户名或密码');

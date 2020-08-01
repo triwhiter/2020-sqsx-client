@@ -59,26 +59,20 @@ export default {
     ...mapMutations(['SET_USER_LOGIN_INFO']),
     ...mapActions(['login']),
     handleSubmit (name) {
-      // this.$http.get('/summer/teacher/getById/2006118801')
-      //   .then((response) => {
-      //     console.log(response.data);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-      const father = this;
+      // const father = this;
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$http.get('/summer/teacher/login/' + this.formDate.username + '/' + this.formDate.password).then((response) => {
-            if (response.data.code === 200) {
-              let res = response.data;
-              console.log(res.data.tname);
-              this.$Message.success(response.data.msg);
-              this.login(res.data);
-              father.$router.push('/');
-            } else {
-              this.$Message.error(response.data.msg);
-            }
+          this.$http.post('/login').then((response) => {
+            console.log(response);
+            // if (response.data.code === 200) {
+            //   let res = response.data;
+            //   console.log(res.data.tname);
+            //   this.$Message.success(response.data.msg);
+            //   this.login(res.data);
+            //   father.$router.push('/');
+            // } else {
+            //   this.$Message.error(response.data.msg);
+            // }
           });
         } else {
           this.$Message.error('请填写正确的用户名或密码');

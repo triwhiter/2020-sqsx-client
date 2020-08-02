@@ -2,11 +2,20 @@
   <div class="info-form">
      <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" >
         <FormItem label="用户名" prop="name">
-            <i-input v-model="formValidate.name" clearable size="large" placeholder="请输入你的姓名"></i-input>
+            <i-input v-model="formValidate.name" clearable size="large" placeholder="请输入你的昵称"></i-input>
         </FormItem>
         <FormItem label="邮箱" prop="mail">
             <i-input v-model="formValidate.mail" clearable size="large" placeholder="请输入你的邮箱"></i-input>
         </FormItem>
+        <FormItem label="姓名" prop="username">
+            <i-input v-model="formValidate.username" clearable size="large" placeholder="请输入你的真实姓名"></i-input>
+        </FormItem>
+        <Form-item label="性别" prop="gender">
+            <Radio-group :model.sync="formValidate.gender">
+                <Radio value="male">男</Radio>
+                <Radio value="female">女</Radio>
+            </Radio-group>
+        </Form-item>
         <FormItem label="密码" prop="password">
             <i-input type="password" v-model="formValidate.password" clearable size="large" placeholder="请输入你的密码"></i-input>
         </FormItem>
@@ -38,7 +47,9 @@ export default {
         name: '',
         mail: '',
         password: '',
-        repassword: ''
+        repassword: '',
+        username: '',
+        gender: ''
       },
       ruleValidate: {
         name: [
@@ -47,6 +58,13 @@ export default {
         mail: [
           { required: true, message: '邮箱不能为空', trigger: 'blur' },
           { type: 'email', message: '邮箱格式错误', trigger: 'blur' }
+        ],
+        username: [
+          { required: true, message: '姓名不能为空', trigger: 'blur' },
+          {pattern: /^[\u4E00-\u9FA5]{2,4}$/, message: '请输入正确的姓名', trigger: 'blur'}
+        ],
+        gender: [
+          { required: true, message: '请选择性别', trigger: 'change' }
         ],
         password: [
           { required: true, message: '密码不能为空', trigger: 'blur' },

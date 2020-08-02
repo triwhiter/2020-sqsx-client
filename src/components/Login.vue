@@ -52,55 +52,54 @@
 </template>
 
 <script>
-import store from "@/vuex/store";
-import { mapMutations, mapActions } from "vuex";
+import store from '@/vuex/store';
+import { mapMutations, mapActions } from 'vuex';
 export default {
-  name: "Login",
-  data() {
+  name: 'Login',
+  data () {
     return {
       formDate: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
       ruleInline: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          { required: true, message: '请输入密码', trigger: 'blur' },
           {
-            type: "string",
+            type: 'string',
             min: 6,
-            message: "密码不能少于6位",
-            trigger: "blur"
+            message: '密码不能少于6位',
+            trigger: 'blur'
           }
         ]
       }
     };
   },
   methods: {
-    ...mapMutations(["SET_USER_LOGIN_INFO"]),
-    ...mapActions(["login"]),
-    handleSubmit(name) {
+    ...mapMutations(['SET_USER_LOGIN_INFO']),
+    ...mapActions(['login']),
+    handleSubmit (name) {
       const father = this;
       this.$refs[name].validate(valid => {
         if (valid) {
           this.$http
-            .post("/login", JSON.stringify(this.formDate))
+            .post('/login', JSON.stringify(this.formDate))
             .then(response => {
-              console.log(response);
-              if (response.data.code === 200) {
-                var res = response.data;
-                console.log(res.data);
+              let res = response.data;
+              console.log(res);
+              if (res.code === 200) {
                 this.$Message.success(res.msg);
                 this.login(res.data);
-                father.$router.push("/");
+                father.$router.push('/');
               } else {
                 this.$Message.error(res.msg);
               }
             });
         } else {
-          this.$Message.error("请填写正确的用户名或密码");
+          this.$Message.error('请填写正确的用户名或密码');
         }
       });
     }

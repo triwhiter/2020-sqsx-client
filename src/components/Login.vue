@@ -86,7 +86,7 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           this.$http
-            .post("/login", JSON.stringify(this.formDate))
+            .post("/login", this.formDate)
             .then(response => {
               console.log(response);
               if (response.data.code === 200) {

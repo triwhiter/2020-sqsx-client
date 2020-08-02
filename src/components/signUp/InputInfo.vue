@@ -11,7 +11,7 @@
             <i-input v-model="formValidate.username" clearable size="large" placeholder="请输入你的真实姓名"></i-input>
         </FormItem>
         <Form-item label="性别" prop="gender">
-            <Radio-group :model.sync="formValidate.gender">
+            <Radio-group v-model="formValidate.gender">
                 <Radio value="male">男</Radio>
                 <Radio value="female">女</Radio>
             </Radio-group>
@@ -85,9 +85,11 @@ export default {
         if (valid) {
           this.$Message.success('注册成功');
           const userinfo = {
-            username: this.formValidate.name,
-            password: this.formValidate.password,
+            name: this.formValidate.name,
             mail: this.formValidate.mail,
+            username: this.formValidate.username,
+            gender: this.formValidate.gender,
+            password: this.formValidate.password,
             phone: this.$route.query.phone
           };
           this.addSignUpUser(userinfo);

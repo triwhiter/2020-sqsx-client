@@ -24,7 +24,9 @@ export const SET_CAROUSELITEMS_INFO = (state, { carouselItems, activity }) => {
   state.marketing.CarouselItems = carouselItems;
   state.marketing.activity = activity;
 };
-
+export const SET_DATAS_INFO = (state, datas) => {
+  state.datas = datas;
+};
 // 设置电脑专栏数据
 export const SET_COMPUTER_INFO = (state, computer) => {
   state.computer = computer;

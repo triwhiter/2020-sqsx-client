@@ -41,6 +41,7 @@ export default new Vuex.Store({
     },
     computer: {}, // 电脑专栏
     eat: {}, // 爱吃专栏
+    datas: {},
     asItems: [], // 广告
     goodsList: [], // 商品列表
     shoppingCart: [], // 购物车

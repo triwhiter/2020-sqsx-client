@@ -18,6 +18,7 @@ const MyAddress = resolve => require(['@/components/home/MyAddress'], resolve);
 const AddAddress = resolve => require(['@/components/home/AddAddress'], resolve);
 const MyOrder = resolve => require(['@/components/home/MyOrder'], resolve);
 const MyShoppingCart = resolve => require(['@/components/home/MyShoppingCart'], resolve);
+const UserInfo = resolve => require(['@/components/home/UserInfo'], resolve);
 const Merchant = resolve => require(['@/components/Merchant'], resolve);
 
 Vue.use(Router);
@@ -105,6 +106,11 @@ export default new Router({
           path: '/',
           name: 'HomeIndex',
           component: MyOrder
+        },
+        {
+          path: 'UserInfo',
+          name: 'UserInfo',
+          component: UserInfo
         },
         {
           path: 'myAddress',

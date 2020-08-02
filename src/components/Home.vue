@@ -2,13 +2,21 @@
   <div class="container">
     <Layout class="layout">
       <Sider class="side-bar" :style="{height: 'calc(100vh - 35px)', background: '#fff', overflow: 'auto'}" ref="side" :collapsed-width="78">
-        <Menu active-name="1-2" theme="light" width="auto" @on-select="onSelect">
+        <Menu active-name="0-2" theme="light" width="auto" @on-select="onSelect">
           <div class="user-icon">
             <div class="user-img">
               <img src="static/img/head.png">
             </div>
             <p>Gavin</p>
           </div>
+          <Submenu name="0">
+            <template slot="title">
+                <Icon type="ionic"></Icon>
+                <span>个人中心</span>
+            </template>
+            <MenuItem name="userInfo">我的资料</MenuItem>
+
+          </Submenu>
           <Submenu name="1">
             <template slot="title">
                 <Icon type="location"></Icon>
@@ -55,6 +63,7 @@ export default {
     return {
       activeTitle: '我的订单',
       bar: {
+        'userInfo': '我的资料',
         'myAddress': '我的收货地址',
         'addAddress': '添加收货地址',
         'myOrder': '我的订单',

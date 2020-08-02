@@ -10,12 +10,12 @@
         <FormItem label="姓名" prop="username">
             <i-input v-model="formValidate.username" clearable size="large" placeholder="请输入你的真实姓名"></i-input>
         </FormItem>
-        <Form-item label="性别" prop="gender">
-            <Radio-group v-model="formValidate.gender">
-                <Radio value="male">男</Radio>
-                <Radio value="female">女</Radio>
-            </Radio-group>
-        </Form-item>
+      <FormItem label="性别" prop="gender">
+            <RadioGroup v-model="formValidate.gender">
+                <Radio label="male">男</Radio>
+                <Radio label="female">女</Radio>
+            </RadioGroup>
+        </FormItem>
         <FormItem label="密码" prop="password">
             <i-input type="password" v-model="formValidate.password" clearable size="large" placeholder="请输入你的密码"></i-input>
         </FormItem>

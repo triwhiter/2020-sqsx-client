@@ -85,20 +85,18 @@ export default {
       const father = this;
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$http
-            .post("/login", JSON.stringify(this.formDate))
-            .then(response => {
-              console.log(response);
-              if (response.data.code === 200) {
-                var res = response.data;
-                console.log(res.data);
-                this.$Message.success(res.msg);
-                this.login(res.data);
-                father.$router.push("/");
-              } else {
-                this.$Message.error(res.msg);
-              }
-            });
+          this.$http.post("/login", this.formDate).then(response => {
+            console.log(response);
+            if (response.data.code === 200) {
+              var res = response.data;
+              console.log(res.data);
+              this.$Message.success(res.msg);
+              this.login(res.data);
+              father.$router.push("/");
+            } else {
+              this.$Message.error(response.data.msg);
+            }
+          });
         } else {
           this.$Message.error("请填写正确的用户名或密码");
         }

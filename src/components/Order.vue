@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Search></Search>
+   <Search></Search>
     <GoodsListNav></GoodsListNav>
     <div class="goods-list-container">
       <Alert show-icon class="tips-box">
@@ -46,7 +46,7 @@
         <div class="pay-box">
           <p><span>提交订单应付总额：</span> <span class="money"><Icon type="social-yen"></Icon> {{totalPrice.toFixed(2)}}</span></p>
           <div class="pay-btn">
-            <router-link to="/pay"><Button type="error" size="large">支付订单</Button></router-link>
+            <router-link to="/pay"><Button type="error" size="large" @click="submitOrder">支付订单</Button></router-link>
           </div>
         </div>
       </div>
@@ -71,6 +71,8 @@ export default {
   data () {
     return {
       goodsCheckList: [],
+      shopping: [],
+      Address: [],
       columns: [
         {
           type: 'selection',
@@ -93,12 +95,12 @@ export default {
           align: 'center'
         },
         {
-          title: '标题',
+          title: '商品名称',
           key: 'title',
           align: 'center'
         },
         {
-          title: '套餐',
+          title: '所属类别',
           width: 198,
           key: 'package',
           align: 'center'
@@ -110,7 +112,7 @@ export default {
           align: 'center'
         },
         {
-          title: '价格',
+          title: '单价',
           width: 68,
           key: 'price',
           align: 'center'
@@ -147,6 +149,9 @@ export default {
           father.checkAddress.address = `${item.name} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.postalcode}`;
         }
       });
+    },
+    submitOrder () {
+      let total = this.totalPrice.toFixed(2);
     }
   },
   mounted () {

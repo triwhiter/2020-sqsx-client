@@ -138,7 +138,7 @@ export default {
               var res = resp.data;
               console.log(res.data);
               this.$Message.success(resp.data.msg);
-               this.addSignUpUser(userinfo);
+               // this.addSignUpUser(userinfo);
                 father.SET_SIGN_UP_SETP(2);
                 this.$router.push({ path: '/SignUp/signUpDone' });
             } else {

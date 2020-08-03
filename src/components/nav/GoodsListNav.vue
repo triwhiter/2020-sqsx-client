@@ -2,17 +2,17 @@
   <div>
     <div class="search-nav">
       <div class="search-nav-container">
-        <ul>
-          <li>全部商品分类</li>
-          <li><router-link to="/">首页</router-link></li>
-          <li><router-link to="/">服装城</router-link></li>
+        <ul >
+          <li v-for="(item,index) in category"
+            :key="index"><router-link to="/goodsList">{{item.name}}</router-link></li>
+<!--          <li><router-link to="/">服装城</router-link></li>
           <li><router-link to="/">美妆馆</router-link></li>
           <li><router-link to="/">BIT超市</router-link></li>
           <li><router-link to="/">生鲜</router-link></li>
           <li><router-link to="/">全球购</router-link></li>
           <li><router-link to="/">闪购</router-link></li>
           <li><router-link to="/">拍卖</router-link></li>
-          <li><router-link to="/">金融</router-link></li>
+          <li><router-link to="/">金融</router-link></li> -->
         </ul>
       </div>
     </div>
@@ -21,7 +21,30 @@
 
 <script>
 export default {
-  name: 'GoodsListNav'
+  name: 'GoodsListNav',
+  data () {
+    return {
+      category: []
+    };
+  },
+  methods: {
+    loadCategory () {
+       this.$http
+       .post('/category/all')
+       .then(resp => {
+         let res = resp.data;
+         if(res.code == 200) {
+           this.category = res.data;
+           console.log(this.category);
+         } else {
+           this.$Message.error(res.msg);
+         }
+       })
+    }
+  },
+  created() {
+    this.loadCategory();
+  }
 };
 </script>
 
@@ -60,7 +83,7 @@ export default {
 }
 .search-nav-container li:first-child{
   padding: 0px 38px;
-  background:#B1191A;
+/*  background:#B1191A; */
   margin: 0px;
   color: #fff;
 }

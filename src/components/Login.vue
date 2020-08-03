@@ -86,15 +86,14 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           this.$http.post("/login", this.formDate).then(response => {
-            console.log(response);
-            if (response.data.code === 200) {
-              var res = response.data;
-              console.log(res.data);
+            let res = response.data;
+            console.log(res);
+            if (res.code === 200) {
               this.$Message.success(res.msg);
               this.login(res.data);
               father.$router.push("/");
             } else {
-              this.$Message.error(response.data.msg);
+              this.$Message.error(res.msg);
             }
           });
         } else {

@@ -56,7 +56,7 @@ import store from "@/vuex/store";
 import { mapMutations, mapActions } from "vuex";
 export default {
   name: "Login",
-  data() {
+  data () {
     return {
       formDate: {
         username: "",

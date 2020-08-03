@@ -126,7 +126,10 @@ export default {
       this.$router.push('/order');
     },
     myInfo () {
-      this.$router.push('/home');
+      this.$router.push({
+        path:"/home",
+       
+      });
     },
     signOutFun () {
       this.signOut();

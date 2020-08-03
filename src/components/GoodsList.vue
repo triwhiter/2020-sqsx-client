@@ -8,7 +8,7 @@
           <BreadcrumbItem to="/">
             <Icon type="ios-home-outline"></Icon> 首页
           </BreadcrumbItem>
-          <BreadcrumbItem to="/goodsList?sreachData=">
+          <BreadcrumbItem to="/goodsList?keyword=">
             <Icon type="bag"></Icon> {{ keyword }}
           </BreadcrumbItem>
         </Breadcrumb>
@@ -169,9 +169,9 @@ export default {
   watch: {
     $route: function(to, from) {
       if (this.$route.query.id == null) {
-        this.keyword = this.$route.query.sreachData;
+        this.keyword = this.$route.query.keyword;
       }
-      if (this.$route.query.sreachData == null) {
+      if (this.$route.query.keyword == null) {
         this.cid = this.$route.query.cid;
       }
       this.loadGoodsList();

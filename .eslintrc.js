@@ -23,6 +23,10 @@ module.exports = {
   rules: {
     'quotes': [0, 'single'], //引号类型 `` "" ''
     'space-before-function-paren': [0, 'always'], //函数定义时括号前面要不要有空格
+    // allow paren-less arrow functions
+    'arrow-parens': 0,
+    // 禁止空格和 tab 的混合缩进
+    'no-mixed-spaces-and-tabs': 0,
     "semi": [2, "always"],
     // allow async-await
     'generator-star-spacing': 'off',

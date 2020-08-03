@@ -12,3 +12,5 @@ const BASE_URL = 'http://localhost:8088/api';
 export const reqGoodCategorys = () => ajax(BASE_URL + '/Categorys/all');
 
 export const reqlogin = (form) => ajax(BASE_URL + '/login', form, "post");
+
+export const reqCategoryProduct = () => ajax(BASE_URL + '/product/allinCate');

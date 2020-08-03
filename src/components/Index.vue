@@ -27,43 +27,39 @@
       </div>
       <!-- 内容 -->
       <div class="seckill-content">
-        <div class="seckill-item" v-for="(item, index) in seckills.goodsList" :key="index">
+        <div class="seckill-item" v-for="(item, index) in top5List" :key="index">
           <div class="seckill-item-img">
-            <router-link to="/goodsList"><img :src="item.img"></router-link>
+            <img :src="beforeImg+item.imgUrl" @click="eatDetail(item.productId )">
           </div>
           <div class="seckill-item-info">
-            <p>{{item.intro}}</p>
+            <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
             <p>
               <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.price}}</span>
-              <span class="seckill-old-price"><s>{{item.realPrice}}</s></span>
+              <span class="seckill-old-price"><s>{{item.price}}</s></span>
             </p>
           </div>
         </div>
       </div>
     </div>
 <!--      循环测试-->
-      <div v-for="(item1, index1) in eat.detail"  :key='index1' >
+      <div>{{eat.code}}</div>
+      <div v-for="(item1, index1) in eatList"  :key='index1' >
         <div class="seckill">
           <!-- 头部 -->
-          <div :class="cssList[index1]">
-            <span class="item-class-title">{{item1.title}}</span>
-            <ul>
-              <li v-for="(item, index) in item1.link" :key="index">
-                <router-link to="/goodsList">{{item}}</router-link>
-              </li>
-            </ul>
+          <div :class="cssList[index1%4]">
+            <span class="item-class-title">{{item1.cname}}</span>
           </div>
           <!-- 内容 -->
           <div class="seckill-content">
-            <div class="seckill-item" v-for="(item, index) in item1.detail" :key="index">
+            <div class="seckill-item" v-for="(item, index) in item1.products" :key="index" v-if="index<=4" >
               <div class="seckill-item-img">
-                <router-link to="/goodsList"><img :src="item.img"></router-link>
+                <img :src="beforeImg+item.imgUrl" @click="eatDetail(item.productId )">
               </div>
               <div class="seckill-item-info">
-                <p>{{item.intro}}</p>
+                <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
                 <p>
                   <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.price}}</span>
-                  <span class="seckill-old-price"><s>{{item.realPrice}}</s></span>
+                  <span class="seckill-old-price"><s>{{item.price}}</s></span>
                 </p>
               </div>
             </div>
@@ -84,10 +80,10 @@ export default {
   created () {
     this.loadSeckillsInfo();
     this.loadCarouselItems();
-    this.loadComputer();
     this.loadEat();
-    this.loadDatas();
     this.loadShoppingCart();
+    this.loadEatDetail();
+    this.loadTop5Detail();
   },
   mounted () {
     const father = this;
@@ -98,6 +94,9 @@ export default {
   data () {
     return {
       setIntervalObj: null,
+      top5List: [],
+      beforeImg: 'http://img14.360buyimg.com/n1/',
+      eatList: [],
       cssList: ['item-class-head',
         'item-class-head1',
         'item-class-head2',
@@ -106,11 +105,49 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['loadSeckillsInfo', 'loadCarouselItems', 'loadComputer', 'loadEat', 'loadDatas', 'loadShoppingCart']),
-    ...mapMutations(['REDUCE_SECKILLS_TIME'])
+    ...mapActions(['loadSeckillsInfo', 'loadCarouselItems', 'loadComputer', 'loadEat', 'loadShoppingCart']),
+    ...mapMutations(['REDUCE_SECKILLS_TIME']),
+    loadEatDetail () {
+      const _this = this;
+      this.$http
+        .get('/products/allinCate')
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.eatList = res;
+          if (res.code === 200) {
+            console.log(res);
+
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    loadTop5Detail () {
+      const _this = this;
+      this.$http
+        .get('/products/top5')
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.top5List = res;
+          if (res.code === 200) {
+            console.log(res);
+
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    eatDetail (productId) {
+      this.$router.push({
+        path: '/goodsDetail',
+        query: { productId: productId }
+      });
+    }
   },
   computed: {
-    ...mapState([ 'seckills', 'computer', 'eat', 'datas' ]),
+    ...mapState([ 'seckills', 'computer', 'eat' ]),
     ...mapGetters([ 'seckillsHours', 'seckillsMinutes', 'seckillsSeconds' ])
   },
   components: {

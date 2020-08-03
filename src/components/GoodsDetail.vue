@@ -7,13 +7,13 @@
       <div class="shop-nav-container">
         <Breadcrumb>
           <BreadcrumbItem to="/">首页</BreadcrumbItem>
-          <BreadcrumbItem to="/goodsList">手机壳</BreadcrumbItem>
-          <BreadcrumbItem>手机保护套</BreadcrumbItem>
+          <BreadcrumbItem to="/goodsList">{{detail.shopName}}</BreadcrumbItem>
+          <BreadcrumbItem>{{detail.intro}}</BreadcrumbItem>
         </Breadcrumb>
       </div>
     </div>
     <!-- 商品信息展示 -->
-    <ShowGoods></ShowGoods>
+    <ShowGoods v-bind:msg="detail"></ShowGoods>
     <!-- 商品详细展示 -->
    <ShowGoodsDetail></ShowGoodsDetail>
     <Spin size="large" fix v-if="isLoading"></Spin>
@@ -35,15 +35,38 @@ export default {
     next();
   },
   created () {
+    var productId = this.$route.query.productId;
+    this.getDetail(productId);
+    this.pushId(productId);
     this.loadGoodsInfo();
   },
   data () {
     return {
+      detail: [],
       tagsColor: [ 'blue', 'green', 'red', 'yellow' ]
     };
   },
   methods: {
-    ...mapActions(['loadGoodsInfo'])
+    ...mapActions(['loadGoodsInfo']),
+    getDetail (productId) {
+      const _this = this;
+      this.$http
+        .get('/products/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.detail = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    pushId(productId){
+
+    }
+
   },
   computed: {
     ...mapState(['goodsInfo', 'isLoading'])

@@ -3,8 +3,9 @@
     <div class="search-nav">
       <div class="search-nav-container">
         <ul >
+          <li><router-link :to="{name: 'GoodsList', query :{cid: 0}}">全部商品</router-link></li>
           <li v-for="(item,index) in category"
-            :key="index"><router-link to="/goodsList">{{item.name}}</router-link></li>
+            :key="index" @click="onload(item)"><router-link :to="{name: 'GoodsList', query :{cid: item.id}}">{{item.name}}</router-link></li>
 <!--          <li><router-link to="/">服装城</router-link></li>
           <li><router-link to="/">美妆馆</router-link></li>
           <li><router-link to="/">BIT超市</router-link></li>
@@ -40,6 +41,9 @@ export default {
            this.$Message.error(res.msg);
          }
        })
+    },
+    onload(item) {
+
     }
   },
   created() {

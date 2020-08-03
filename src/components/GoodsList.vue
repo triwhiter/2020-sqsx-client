@@ -96,6 +96,7 @@ export default {
       current: 1,
       pageSize: 10,
       index: 1,
+      cid: 0,
       beforeImg: 'http://img14.360buyimg.com/n1/',
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
@@ -123,8 +124,10 @@ export default {
     },
     //获取后台的商品列表
     loadGoodsList (){
+      console.log(this.cid);
+      console.log(this.searchItem);
       this.$http
-      .get('/products/'+this.current + '/' + this.pageSize)
+      .get('/products/'+ this.current + '/' + this.pageSize + '/' + this.cid)
       .then(resp => {
         console.log(resp);
          let res = resp.data;
@@ -149,8 +152,19 @@ export default {
   created() {
     this.loadGoodsList();
   },
+  watch: {
+    '$route': function(to, from) {
+      if(this.$route.query.id == null){
+        this.searchItem = this.$route.query.sreachData;
+      }
+      if(this.$route.query.sreachData == null){
+        this.cid = this.$route.query.cid;
+      }
+      this.loadGoodsList();
+    }
+  },
   mounted() {
-    this.searchItem = this.$route.query.sreachData;
+    this.searchItem = "";
   },
   components: {
     Search,

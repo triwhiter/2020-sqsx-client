@@ -20,7 +20,7 @@ const MyOrder = resolve => require(['@/components/home/MyOrder'], resolve);
 const MyShoppingCart = resolve => require(['@/components/home/MyShoppingCart'], resolve);
 const UserInfo = resolve => require(['@/components/home/UserInfo'], resolve);
 const Merchant = resolve => require(['@/components/Merchant'], resolve);
-
+const GoodsListNav = resolve => require(['@/components/nav/GoodsListNav.vue'], resolve);
 Vue.use(Router);
 
 export default new Router({
@@ -29,6 +29,11 @@ export default new Router({
       path: '/', // 首页
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/GoodsListNav',
+      name: 'GoodsListNav',
+      component: GoodsListNav
     },
     {
       path: '/Login', // 登录

@@ -36,6 +36,9 @@ export default {
   },
   created () {
     this.loadGoodsInfo();
+    //取出商品列表页中传过来的商品id值
+    let pid = this.$route.query.pid;
+    console.log(pid);
   },
   data () {
     return {

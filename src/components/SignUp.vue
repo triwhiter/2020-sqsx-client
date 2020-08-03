@@ -54,7 +54,7 @@ export default {
 <style scoped>
 .container {
   margin: 15px auto;
-  height: 500px;
+  height: 650px;
   overflow: hidden;
 }
 .signup-img-box {
@@ -76,7 +76,7 @@ export default {
   padding-left: 30px;
   padding-top: 30px;
   width: 430px;
-  height: 380px;
+  height: auto;
   border: 1px solid #495060;
 }
 .sign-up-box {

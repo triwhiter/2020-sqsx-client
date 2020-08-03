@@ -103,21 +103,26 @@ export default {
       // 提交验证
       this.$refs[name].validate(valid => {
         if (valid) {
-          let data=ajax("/confirmCode", this.formValidate, 'post');
-          if(data.code==200){
-             _this.$Message.success({
-                  content: data.msg,
-                  duration: 6,
-                  closable: true
-                });
-          }else{
-            _this.$Message.error(data.msg);
-          }
-          this.$router.push({
-            path: "/SignUp/inputInfo",
-            query: { phone: this.formValidate.phone }
+          this.$http
+          .post('/confirmCode', JSON.stringify(this.formValidate))
+          .then(response => {
+            console.log(response);
+            let res = response.data;
+            if(res.code === 200){
+              _this.$Message.success({
+                content: res.msg,
+                duration: 6,
+                closable: true
+              });
+              this.$router.push({
+                path: "/SignUp/inputInfo",
+                query: { phone: this.formValidate.phone },
+              });
+              this.SET_SIGN_UP_SETP(1);
+            } else {
+              _this.$Message.error(res.msg)
+            }
           });
-          this.SET_SIGN_UP_SETP(1);
         } else {
           this.$Message.error({
             content: "请填写正确的信息",

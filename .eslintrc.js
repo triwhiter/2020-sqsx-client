@@ -21,8 +21,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    // "quotes": [0, 'single'], //引号类型 `` "" ''
-    // 'space-before-function-paren': [0, 'always'] //函数定义时括号前面要不要有空格
+    "quotes": [0, 'single'], //引号类型 `` "" ''
+    'space-before-function-paren': [0, 'always'], //函数定义时括号前面要不要有空格
     "semi": [2, "always"],
     // allow async-await
     'generator-star-spacing': 'off',

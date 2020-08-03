@@ -9,7 +9,7 @@
             <Icon type="ios-home-outline"></Icon> 首页
           </BreadcrumbItem>
           <BreadcrumbItem to="/goodsList?sreachData=">
-            <Icon type="bag"></Icon> {{ searchItem }}
+            <Icon type="bag"></Icon> {{ keyword }}
           </BreadcrumbItem>
         </Breadcrumb>
       </div>
@@ -17,30 +17,6 @@
       <GoodsClassNav></GoodsClassNav>
       <!-- 商品展示容器 -->
       <div class="goods-box">
-        <!-- <div class="as-box">
-          <div class="item-as-title">
-            <span>商品精选</span>
-            <span>广告</span>
-          </div>
-          <div class="item-as" v-for="(item,index) in asItems" :key="index">
-            <div class="item-as-img">
-              <img :src="item.img" alt="">
-            </div>
-            <div class="item-as-price">
-              <span>
-                <Icon type="social-yen text-danger"></Icon>
-                <span class="seckill-price text-danger">{{item.price}}</span>
-              </span>
-            </div>
-            <div class="item-as-intro">
-              <span>{{item.intro}}</span>
-            </div>
-            <div class="item-as-selled">
-              已有<span>{{item.num}}</span>人评价
-            </div>
-          </div>
-        </div>
-        -->
         <div class="goods-list-box">
           <div class="goods-list-tool">
             <ul>
@@ -62,7 +38,8 @@
               :key="index"
             >
               <div class="goods-show-img">
-                <router-link to="/goodsDetail"
+                <router-link
+                  :to="{ name: 'GoodsDetail', query: { pid: item.productId } }"
                   ><img
                     :src="beforeImg + item.imgUrl"
                     style="width: 100%;height: 100%;"
@@ -77,7 +54,7 @@
                 </span>
               </div>
               <div class="goods-show-detail">
-                <span>{{ item.intro }}</span>
+                <span v-html="item.intro"></span>
               </div>
               <div class="goods-show-num">
                 累计销量 <span>{{ item.saleNum }} </span>
@@ -118,12 +95,13 @@ export default {
   },
   data() {
     return {
-      searchItem: "",
+      keyword: "null",
       orderGoodsList: [],
       total: 100,
       current: 1,
       pageSize: 10,
       index: 1,
+      cid: 0,
       beforeImg: "http://img14.360buyimg.com/n1/",
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
@@ -151,15 +129,26 @@ export default {
     },
     //获取后台的商品列表
     loadGoodsList() {
+      console.log(this.cid);
+      console.log(this.keyword);
       this.$http
-        .get("/products/" + this.current + "/" + this.pageSize)
+        .get(
+          "/products/search/" +
+            this.keyword +
+            "/" +
+            this.current +
+            "/" +
+            this.pageSize +
+            "/" +
+            this.cid
+        )
         .then(resp => {
+          console.log(resp);
           let res = resp.data;
           if (res.code == 200) {
             console.log(res);
-            this.total = res.data.total;
             this.orderGoodsList = res.data.list;
-            console.log(this.orderGoodsList);
+            this.total = res.data.total;
           } else {
             this.$Message.error(res.msg);
           }
@@ -177,8 +166,19 @@ export default {
   created() {
     this.loadGoodsList();
   },
+  watch: {
+    $route: function(to, from) {
+      if (this.$route.query.id == null) {
+        this.keyword = this.$route.query.sreachData;
+      }
+      if (this.$route.query.sreachData == null) {
+        this.cid = this.$route.query.cid;
+      }
+      this.loadGoodsList();
+    }
+  },
   mounted() {
-    this.searchItem = this.$route.query.sreachData;
+    this.keyword = "null";
   },
   components: {
     Search,

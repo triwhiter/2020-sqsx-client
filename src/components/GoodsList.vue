@@ -126,52 +126,6 @@ export default {
       this.isAction[index] = true;
       this.icon[index] = "arrow-up-a";
       this.SET_GOODS_ORDER_BY(data);
-<<<<<<< HEAD
-    },
-    //获取后台的商品列表,没有搜索
-    loadGoodsList (){
-      console.log(this.cid);
-      console.log(this.searchItem);
-      this.$http
-      .get('/products/'+ this.current + '/' + this.pageSize + '/' + this.cid)
-      .then(resp => {
-        console.log(resp);
-         let res = resp.data;
-         if(res.code == 200){
-           console.log(res);
-           this.orderGoodsList = res.data.list;
-           this.total = res.data.total;
-         } else {
-           this.$Message.error(res.msg);
-         }
-      });
-    },
-    //获取后台商品列表，分类搜索
-    loadGoodsListSreach () {
-      console.log(this.cid);
-      console.log(this.searchItem);
-      this.$http
-      .get('/products/'+ this.searchItem + '/' + this.current + '/' + this.pageSize + '/' + this.cid)
-      .then(resp => {
-        console.log(resp);
-         let res = resp.data;
-         if(res.code == 200){
-           console.log(res);
-           this.orderGoodsList = res.data.list;
-           this.total = res.data.total;
-         } else {
-           this.$Message.error(res.msg);
-         }
-      });
-    },
-    changePage (newpage) {
-      this.current = newpage;
-      this.loadGoodsList();
-    },
-    changePageSize (newPageSize) {
-      this.pageSize = newPageSize;
-      this.loadGoodsList();
-=======
     },
     //获取后台的商品列表
     loadGoodsList() {
@@ -207,29 +161,10 @@ export default {
     changePageSize(newPageSize) {
       this.pageSize = newPageSize;
       this.loadGoodsList();
->>>>>>> 9a43575d44cac04fbc2914ac6d1dde5c052cc9c6
     }
   },
   created() {
     this.loadGoodsList();
-<<<<<<< HEAD
-  },
-  watch: {
-    '$route': function(to, from) {
-      if(this.$route.query.id == null){
-        this.searchItem = this.$route.query.sreachData;
-      }
-      if(this.$route.query.sreachData == null){
-        this.cid = this.$route.query.cid;
-        this.searchItem = "";
-      }
-      if(this.searchItem == ""){
-        this.loadGoodsList();
-      } else {
-        this.loadGoodsListSreach();
-      }
-    }
-=======
   },
   watch: {
     $route: function(to, from) {
@@ -238,10 +173,10 @@ export default {
       }
       if (this.$route.query.sreachData == null) {
         this.cid = this.$route.query.cid;
+        this.keyword = "null";
       }
       this.loadGoodsList();
     }
->>>>>>> 9a43575d44cac04fbc2914ac6d1dde5c052cc9c6
   },
   mounted() {
     this.keyword = "null";

@@ -63,7 +63,7 @@
             >
               <div class="goods-show-img">
                 <router-link to="/goodsDetail"
-                  ><img :src="item.img"
+                  ><img :src="item.imgUrl"
                 /></router-link>
               </div>
               <div class="goods-show-price">
@@ -88,7 +88,7 @@
         </div>
       </div>
       <div class="goods-page">
-        <Page :total="100" show-sizer></Page>
+        <Page :total="total" :current="current" :page-size="pageSize" show-sizer></Page>
       </div>
     </div>
     <Spin size="large" fix v-if="isLoading"></Spin>
@@ -110,6 +110,10 @@ export default {
   data() {
     return {
       searchItem: "",
+      orderGoosList: [],
+      total: 100,
+      current: 1,
+      pageSize: 10,
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
       goodsTool: [
@@ -121,10 +125,10 @@ export default {
   },
   computed: {
     ...mapState(["asItems", "isLoading"]),
-    ...mapGetters(["orderGoodsList"])
+    // ...mapGetters(["orderGoodsList"])
   },
   methods: {
-    ...mapActions(["loadGoodsList"]),
+    // ...mapActions(["loadGoodsList"]),
     ...mapMutations(["SET_GOODS_ORDER_BY"]),
     orderBy(data, index) {
       console.log(data);
@@ -133,6 +137,21 @@ export default {
       this.isAction[index] = true;
       this.icon[index] = "arrow-up-a";
       this.SET_GOODS_ORDER_BY(data);
+    },
+    //获取后台的商品列表
+    loadGoodsList (){
+      this.$http
+      .get('/products/'+this.current + '/' + this.pageSize)
+      .then(resp => {
+         console.log(resp);
+         let res = resp.data;
+         if(res.code == 200){
+           console.log(res);
+           this.orderGoosList = res;
+         } else {
+           this.$Message.error(res.msg);
+         }
+      });
     }
   },
   created() {

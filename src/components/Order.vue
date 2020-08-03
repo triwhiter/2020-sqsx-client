@@ -66,7 +66,9 @@ export default {
     next();
   },
   created () {
+    //
     this.loadAddress();
+    this.loadShopping();
   },
   data () {
     return {

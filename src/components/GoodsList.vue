@@ -63,7 +63,9 @@
             >
               <div class="goods-show-img">
                 <router-link to="/goodsDetail"
-                  ><img :src="item.imgUrl" style="width: 100%;height: 100%;"
+                  ><img
+                    :src="beforeImg + item.imgUrl"
+                    style="width: 100%;height: 100%;"
                 /></router-link>
               </div>
               <div class="goods-show-price">
@@ -78,7 +80,7 @@
                 <span>{{ item.intro }}</span>
               </div>
               <div class="goods-show-num">
-                月销量<span>{{ item.saleNum }}</span>
+                累计销量 <span>{{ item.saleNum }} </span>
               </div>
               <div class="goods-show-seller">
                 <span>{{ item.shopName }}</span>
@@ -89,11 +91,13 @@
       </div>
       <div class="goods-page">
         <Page
-        @on-change="changePage"
-        @on-page-size-change="changePageSize"
-        :total="total"
-        :current="current"
-        :page-size="pageSize" show-sizer></Page>
+          @on-change="changePage"
+          @on-page-size-change="changePageSize"
+          :total="total"
+          :current="current"
+          :page-size="pageSize"
+          show-sizer
+        ></Page>
       </div>
     </div>
     <Spin size="large" fix v-if="isLoading"></Spin>
@@ -120,6 +124,7 @@ export default {
       current: 1,
       pageSize: 10,
       index: 1,
+      beforeImg: "http://img14.360buyimg.com/n1/",
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
       goodsTool: [
@@ -130,7 +135,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["asItems", "isLoading"]),
+    ...mapState(["asItems", "isLoading"])
     // ...mapGetters(["orderGoodsList"])
   },
   methods: {
@@ -145,29 +150,26 @@ export default {
       this.SET_GOODS_ORDER_BY(data);
     },
     //获取后台的商品列表
-    loadGoodsList (){
+    loadGoodsList() {
       this.$http
-      .get('/products/'+this.current + '/' + this.pageSize)
-      .then(resp => {
-         let res = resp.data;
-         let beforeImg = 'http://img14.360buyimg.com/n1/';
-         if(res.code == 200){
-           console.log(res);
-           this.orderGoodsList = res.data;
-           for(let i = 0; i < this.orderGoodsList.length; i++){
-             this.orderGoodsList[i].imgUrl = beforeImg + this.orderGoodsList[i].imgUrl;
-           }
-           console.log(this.orderGoodsList);
-         } else {
-           this.$Message.error("服务器出现了点问题。。");
-         }
-      });
+        .get("/products/" + this.current + "/" + this.pageSize)
+        .then(resp => {
+          let res = resp.data;
+          if (res.code == 200) {
+            console.log(res);
+            this.total = res.data.total;
+            this.orderGoodsList = res.data.list;
+            console.log(this.orderGoodsList);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
     },
-    changePage (newpage) {
+    changePage(newpage) {
       this.current = newpage;
       this.loadGoodsList();
     },
-    changePageSize (newPageSize) {
+    changePageSize(newPageSize) {
       this.pageSize = newPageSize;
       this.loadGoodsList();
     }

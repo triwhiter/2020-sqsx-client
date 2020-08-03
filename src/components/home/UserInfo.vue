@@ -9,13 +9,13 @@
           <FormItem label="昵称" prop="name">
             <i-input v-model="formData.name" size="large"></i-input>
           </FormItem>
-          <FormItem label="收件地址" prop="email">
+          <FormItem label="邮箱" prop="email">
             <i-input v-model="formData.email" size="large"></i-input>
           </FormItem>
           <FormItem label="手机号码" prop="phone">
             <i-input v-model="formData.phone" size="large"></i-input>
           </FormItem>
-          <FormItem label="邮政编码" prop="sex">
+          <FormItem label="性别" prop="sex">
             <i-input v-model="formData.sex" size="large"></i-input>
           </FormItem>
         </Form>

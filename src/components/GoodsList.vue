@@ -9,7 +9,7 @@
             <Icon type="ios-home-outline"></Icon> 首页
           </BreadcrumbItem>
           <BreadcrumbItem to="/goodsList?sreachData=">
-            <Icon type="bag"></Icon> {{ searchItem }}
+            <Icon type="bag"></Icon> {{ keyword }}
           </BreadcrumbItem>
         </Breadcrumb>
       </div>
@@ -38,8 +38,11 @@
               :key="index"
             >
               <div class="goods-show-img">
-                <router-link :to="{name:'GoodsDetail', query: {pid: item.productId}}"
-                  ><img :src="beforeImg + item.imgUrl" style="width: 100%;height: 100%;"
+                <router-link
+                  :to="{ name: 'GoodsDetail', query: { pid: item.productId } }"
+                  ><img
+                    :src="beforeImg + item.imgUrl"
+                    style="width: 100%;height: 100%;"
                 /></router-link>
               </div>
               <div class="goods-show-price">
@@ -51,10 +54,10 @@
                 </span>
               </div>
               <div class="goods-show-detail">
-                <span>{{ item.intro }}</span>
+                <span v-html="item.intro"></span>
               </div>
               <div class="goods-show-num">
-                月销量<span>{{ item.saleNum }}</span>
+                累计销量 <span>{{ item.saleNum }} </span>
               </div>
               <div class="goods-show-seller">
                 <span>{{ item.shopName }}</span>
@@ -65,11 +68,13 @@
       </div>
       <div class="goods-page">
         <Page
-        @on-change="changePage"
-        @on-page-size-change="changePageSize"
-        :total="total"
-        :current="current"
-        :page-size="pageSize" show-sizer></Page>
+          @on-change="changePage"
+          @on-page-size-change="changePageSize"
+          :total="total"
+          :current="current"
+          :page-size="pageSize"
+          show-sizer
+        ></Page>
       </div>
     </div>
     <Spin size="large" fix v-if="isLoading"></Spin>
@@ -90,14 +95,14 @@ export default {
   },
   data() {
     return {
-      searchItem: "",
+      keyword: "null",
       orderGoodsList: [],
       total: 100,
       current: 1,
       pageSize: 10,
       index: 1,
       cid: 0,
-      beforeImg: 'http://img14.360buyimg.com/n1/',
+      beforeImg: "http://img14.360buyimg.com/n1/",
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
       goodsTool: [
@@ -108,7 +113,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["asItems", "isLoading"]),
+    ...mapState(["asItems", "isLoading"])
     // ...mapGetters(["orderGoodsList"])
   },
   methods: {
@@ -121,6 +126,7 @@ export default {
       this.isAction[index] = true;
       this.icon[index] = "arrow-up-a";
       this.SET_GOODS_ORDER_BY(data);
+<<<<<<< HEAD
     },
     //获取后台的商品列表,没有搜索
     loadGoodsList (){
@@ -165,10 +171,48 @@ export default {
     changePageSize (newPageSize) {
       this.pageSize = newPageSize;
       this.loadGoodsList();
+=======
+    },
+    //获取后台的商品列表
+    loadGoodsList() {
+      console.log(this.cid);
+      console.log(this.keyword);
+      this.$http
+        .get(
+          "/products/search/" +
+            this.keyword +
+            "/" +
+            this.current +
+            "/" +
+            this.pageSize +
+            "/" +
+            this.cid
+        )
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data;
+          if (res.code == 200) {
+            console.log(res);
+            this.orderGoodsList = res.data.list;
+            this.total = res.data.total;
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    changePage(newpage) {
+      this.current = newpage;
+      this.loadGoodsList();
+    },
+    changePageSize(newPageSize) {
+      this.pageSize = newPageSize;
+      this.loadGoodsList();
+>>>>>>> 9a43575d44cac04fbc2914ac6d1dde5c052cc9c6
     }
   },
   created() {
     this.loadGoodsList();
+<<<<<<< HEAD
   },
   watch: {
     '$route': function(to, from) {
@@ -185,9 +229,22 @@ export default {
         this.loadGoodsListSreach();
       }
     }
+=======
+  },
+  watch: {
+    $route: function(to, from) {
+      if (this.$route.query.id == null) {
+        this.keyword = this.$route.query.sreachData;
+      }
+      if (this.$route.query.sreachData == null) {
+        this.cid = this.$route.query.cid;
+      }
+      this.loadGoodsList();
+    }
+>>>>>>> 9a43575d44cac04fbc2914ac6d1dde5c052cc9c6
   },
   mounted() {
-    this.searchItem = "";
+    this.keyword = "null";
   },
   components: {
     Search,

@@ -6,22 +6,51 @@
       </div>
       <div class="add-box">
         <Form :model="formData" label-position="left" :label-width="100" :rules="ruleInline">
-          <FormItem label="昵称" prop="name">
-            <i-input v-model="formData.name" size="large"></i-input>
+          <FormItem label="昵称" prop="nickName">
+            <i-input v-model="formData.nickName" size="large"></i-input>
+          </FormItem>
+          <FormItem label="用户名称" prop="userName">
+            <i-input v-model="formData.userName" size="large"></i-input>
           </FormItem>
           <FormItem label="邮箱" prop="email">
             <i-input v-model="formData.email" size="large"></i-input>
           </FormItem>
           <FormItem label="手机号码" prop="phone">
-            <i-input v-model="formData.phone" size="large"></i-input>
+            <i-input v-model="formData.phoneNumber" size="large"></i-input>
           </FormItem>
-          <FormItem label="性别" prop="sex">
+          <FormItem label="性别" prop="sex" >
             <i-input v-model="formData.sex" size="large"></i-input>
           </FormItem>
+          <FormItem label="性别" prop="id" hidden="true">
+            <i-input v-model="formData.id" size="large"></i-input>
+          </FormItem>
+          <FormItem label="性别" prop="avatar" hidden="true">
+            <i-input v-model="formData.avatar" size="large"></i-input>
+          </FormItem>
+          <FormItem label="性别" prop="createTime" hidden="true">
+            <i-input v-model="formData.createTime" size="large"></i-input>
+          </FormItem>
+          <FormItem label="性别" prop="updateTime" hidden="true">
+            <i-input v-model="formData.updateTime" size="large"></i-input>
+          </FormItem>
+          <FormItem label="性别" prop="password" hidden="true">
+            <i-input v-model="formData.password" size="large"></i-input>
+          </FormItem>
+          <FormItem label="性别" prop="level" hidden="true">
+            <i-input v-model="formData.level" size="large"></i-input>
+          </FormItem>
+          <FormItem label="性别" prop="integral" hidden="true">
+            <i-input v-model="formData.integral" size="large"></i-input>
+          </FormItem>
+
         </Form>
       </div>
       <div class="add-submit">
-        <Button type="primary" @click="editUser">保存修改</Button>
+        <!-- <Button type="primary" @click="editUser">保存修改</Button> -->
+        <template>
+          <i-button type="primary" @click="editUser">保存修改</i-button>
+        </template>
+
       </div>
     </div>
   </div>
@@ -36,16 +65,30 @@
         // uid: tihs.$route.query.id,
 
         formData: {
-          name: '',
+          nickName: '',
+          userName: '',
           email: '',
-          phone: '',
+          phoneNumber: '',
           sex: '',
+          avatar: '',
+          createTime: '',
+          updateTime: '',
+          id: '',
+          password: '',
+          level: '',
+          integral: '',
+
 
         },
         ruleInline: {
-          name: [{
+          userName: [{
             required: false,
-            message: '请输入姓名',
+            message: '请输入用户名称',
+            trigger: 'blur'
+          }],
+          nickName: [{
+            required: false,
+            message: '请输入昵称',
             trigger: 'blur'
           }],
           sex: [{
@@ -74,15 +117,19 @@
       };
     },
     methods: {
-      editUser:function(){
+      editUser: function() {
         const _this = this;
-        let params = _this.formData;
+        let user = _this.formData;
         _this.$http
-        .get('/user/updata',params)
-        .then(resp =>{
-          console.log(resp)
-        }
-        )
+          .get('/user/updata', user)
+          .then(resp => {
+            console.log(resp)
+            if (resp.data.code == 200) {
+
+              _this.$Message.info('成功修改', 3);
+
+            }
+          });
       }
     },
     components: {
@@ -93,10 +140,18 @@
       let user = sessionStorage.getItem('loginInfo');
       let userin = (JSON.parse(user));
       console.log(JSON.parse(user))
-      _this.formData.name = userin.nickName;
-      _this.formData.phone = userin.phoneNumber;
+      _this.formData.nickName = userin.nickName;
+       _this.formData.userName = userin.userName;
+      _this.formData.phoneNumber = userin.phoneNumber;
       _this.formData.sex = userin.sex;
       _this.formData.email = userin.email;
+      _this.formData.avatar = userin.avatar;
+       _this.formData.id= userin.id;
+      _this.formData.level = userin.level;
+      _this.formData.password = userin.password;
+      _this.formData.createTime = userin.createTime;
+       _this.formData.updateTime = userin.updateTime;
+       _this.formData.integral = userin.integral;
     }
   };
 </script>

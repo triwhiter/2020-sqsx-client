@@ -6,9 +6,9 @@
         <Menu active-name="0-2" theme="light" width="auto" @on-select="onSelect">
           <div class="user-icon">
             <div class="user-img">
-              <img src="static/img/head.png">
+              <img v-bind:src="ava">
             </div>
-            <p>Gavin</p>
+            <p>{{nickname}}</p>
           </div>
           <Submenu name="0">
             <template slot="title">
@@ -62,6 +62,8 @@
     name: 'Home',
     data() {
       return {
+        ava: 'https://cdn2.jianshu.io/assets/default_avatar/11-4d7c6ca89f439111aff57b23be1c73ba.jpg',
+        nickname: '无名',
         activeTitle: '我的订单',
         bar: {
           'userInfo': '我的资料',
@@ -80,10 +82,14 @@
         // console.log("id"+this.userInfo.id)
       }
     },
-    // created:function(){
-    //   console.log("当前用户的uid"+this.uid)
-
-    // }
+    created: function() {
+      const _this = this
+      let user = sessionStorage.getItem('loginInfo');
+      let userin = (JSON.parse(user));
+      _this.ava = userin.avatar;
+      _this.nickname = userin.nickName;
+      console.log("userin" + userin)
+    }
   };
 </script>
 

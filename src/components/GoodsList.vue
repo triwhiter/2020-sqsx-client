@@ -63,7 +63,7 @@
             >
               <div class="goods-show-img">
                 <router-link to="/goodsDetail"
-                  ><img :src="item.imgUrl"
+                  ><img :src="item.imgUrl" style="width: 100%;height: 100%;"
                 /></router-link>
               </div>
               <div class="goods-show-price">
@@ -110,10 +110,11 @@ export default {
   data() {
     return {
       searchItem: "",
-      orderGoosList: [],
+      orderGoodsList: [],
       total: 100,
       current: 1,
       pageSize: 10,
+      index: 1,
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
       goodsTool: [
@@ -143,11 +144,16 @@ export default {
       this.$http
       .get('/products/'+this.current + '/' + this.pageSize)
       .then(resp => {
-         console.log(resp);
          let res = resp.data;
+         let beforeImg = 'http://img14.360buyimg.com/n1/';
          if(res.code == 200){
            console.log(res);
-           this.orderGoosList = res;
+           this.orderGoodsList = res.data;
+           for(let i = 0; i < this.orderGoodsList.length; i++){
+             this.orderGoodsList[i].imgUrl = beforeImg + this.orderGoodsList[i].imgUrl;
+           }
+           this.$Message.success(res.msg);
+           console.log(this.orderGoodsList);
          } else {
            this.$Message.error(res.msg);
          }

@@ -88,7 +88,12 @@
         </div>
       </div>
       <div class="goods-page">
-        <Page :total="total" :current="current" :page-size="pageSize" show-sizer></Page>
+        <Page
+        @on-change="changePage"
+        @on-page-size-change="changePageSize"
+        :total="total"
+        :current="current"
+        :page-size="pageSize" show-sizer></Page>
       </div>
     </div>
     <Spin size="large" fix v-if="isLoading"></Spin>
@@ -118,7 +123,7 @@ export default {
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
       goodsTool: [
-        { title: "综合", en: "sale" },
+        { title: "销量", en: "sale" },
         { title: "评论数", en: "remarks" },
         { title: "价格", en: "price" }
       ]
@@ -152,12 +157,19 @@ export default {
            for(let i = 0; i < this.orderGoodsList.length; i++){
              this.orderGoodsList[i].imgUrl = beforeImg + this.orderGoodsList[i].imgUrl;
            }
-           this.$Message.success(res.msg);
            console.log(this.orderGoodsList);
          } else {
-           this.$Message.error(res.msg);
+           this.$Message.error("服务器出现了点问题。。");
          }
       });
+    },
+    changePage (newpage) {
+      this.current = newpage;
+      this.loadGoodsList();
+    },
+    changePageSize (newPageSize) {
+      this.pageSize = newPageSize;
+      this.loadGoodsList();
     }
   },
   created() {

@@ -1,8 +1,10 @@
 <template>
   <div>
-    <Table border :columns="columns" :data="order" size="large" no-data-text="你还有订单，快点去购物吧"></Table>
+    <Table border :columns="columns" :data="order" size="large" no-data-text="你还没有订单，快点去购物吧"></Table>
     <div class="page-size">
-      <Page :total="10" show-sizer></Page>
+      <template>
+          <Page :total="total" :page-size="pageSize" prev-text="Previous" next-text="Next" @on-change="change" />
+      </template>
     </div>
   </div>
 </template>
@@ -13,8 +15,8 @@
     data() {
       return {
         order: [{
-          oid: '1',
-          // avatar: '',
+          id: '1',
+          avatar: '',
           store: 0,
           name: '',
           number: 0,
@@ -22,18 +24,30 @@
           // title: '',
           create_time: ''
         }],
+        total:10,
+        pageSize:1,
+
         columns: [{
             title: '订单号',
-            key: 'oid',
+            key: 'id',
             width: 200,
             align: 'center'
           },
-          // {
-          //   title: '图片',
-          //   src: 'avatar',
-
-          //   align: 'center'
-          // },
+        {
+          title: '图片',
+          key: 'img_url',
+          width: 220,
+          render: (h, params) => {
+            return h('div', [
+              h('img', {
+                attrs: {
+                  src: 'http://img14.360buyimg.com/n4/'+params.row.img_url
+                }
+              })
+            ]);
+          },
+          align: 'center'
+        },
           {
             title: '店铺名',
             key: 'store',
@@ -67,6 +81,22 @@
         ]
       };
     },
+    methods:{
+      change:function(current){
+        console.log(current)
+        let user = sessionStorage.getItem('loginInfo');
+        let userin = (JSON.parse(user));
+        this.$http
+        .get('/orderList/getOrderInfoPage/'+userin.id+'/'+current+'/1')
+        .then(resp => {
+          if(resp.data.code == 200){
+            console.log("查询成功")
+          }
+        })
+
+      }
+    },
+
     created: function() {
       console.log(this.order[0].oid)
       const _this = this;

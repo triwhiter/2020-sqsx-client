@@ -120,7 +120,7 @@ export default {
     // ...mapActions(["loadGoodsList"]),
     ...mapMutations(["SET_GOODS_ORDER_BY"]),
     orderBy(data, index) {
-      console.log(data);
+      // console.log(data);
       this.icon = ["arrow-down-a", "arrow-down-a", "arrow-down-a"];
       this.isAction = [false, false, false];
       this.isAction[index] = true;
@@ -129,8 +129,8 @@ export default {
     },
     //获取后台的商品列表
     loadGoodsList() {
-      console.log(this.cid);
-      console.log(this.keyword);
+      // console.log(this.cid);
+      // console.log(this.keyword);
       this.$http
         .get(
           "/products/search/" +

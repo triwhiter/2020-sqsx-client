@@ -108,7 +108,7 @@
                 path: '/home/MyOrder'
               })
             }
-            
+
             console.log(resp.data.code)
 
           })
@@ -132,7 +132,9 @@
           })
       },
       goTo:function(){
-        th
+       this.$router.push({
+         path: '/Order'
+       })
       }
     },
     created: function() {

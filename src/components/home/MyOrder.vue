@@ -14,7 +14,7 @@
       return {
         order: [{
           id: '1',
-          // avatar: '',
+          avatar: '',
           store: 0,
           name: '',
           number: 0,
@@ -28,12 +28,21 @@
             width: 200,
             align: 'center'
           },
-          // {
-          //   title: '图片',
-          //   src: 'avatar',
-
-          //   align: 'center'
-          // },
+        {
+          title: '图片',
+          key: 'img_url',
+          width: 220,
+          render: (h, params) => {
+            return h('div', [
+              h('img', {
+                attrs: {
+                  src: 'http://img14.360buyimg.com/n4/'+params.row.img_url
+                }
+              })
+            ]);
+          },
+          align: 'center'
+        },
           {
             title: '店铺名',
             key: 'store',

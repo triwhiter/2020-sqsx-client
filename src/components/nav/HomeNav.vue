@@ -24,8 +24,8 @@
       </div>
       <div class="nav-item">
         <ul style="display:table;text-align:center">
-          <li v-for="(item,index) in nav" :key="index">
-            <a href="#">{{item}}</a>
+          <li v-for="(item,index) in navList" :key="index">
+            <a href="#">{{item.cname}}</a>
           </li>
         </ul>
       </div>
@@ -38,24 +38,16 @@ import store from '@/vuex/store';
 import { mapState } from 'vuex';
 export default {
   name: 'HomeNav',
+  props: {
+    navList: {
+      default: ''
+    }
+  },
   data () {
     return {
       panel1: false,
       panel2: false,
-      nav: [
-        '限时优惠',
-        '坚果',
-        '麻辣',
-        '果干',
-        '饼干',
-        '果茶',
-        '鲜果',
-        '罐头',
-        '肉类',
-        '饮品',
-        '大礼盒',
-        '本站特色'
-      ]
+      nav: []
     };
   },
   computed: {

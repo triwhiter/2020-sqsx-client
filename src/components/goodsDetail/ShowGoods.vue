@@ -3,11 +3,11 @@
     <div class="item-detail-show">
       <div class="item-detail-left">
         <div class="item-detail-big-img">
-          <img :src="beforeImg+msg.imgUrl" alt="">
+          <img :src="beforeImg+imgs[imgIndex].imgUrl" alt="">
         </div>
         <div class="item-detail-img-row">
-          <div class="item-detail-img-small" v-for="(item, index) in goodsInfo.goodsImg" :key="index" @mouseover="showBigImg(index)">
-            <img :src="item" alt="">
+          <div class="item-detail-img-small" v-for="(item, index) in imgs" :key="index" @mouseover="showBigImg(index)">
+            <img :src="beforeImg+item.imgUrl" alt="">
           </div>
         </div>
       </div>
@@ -49,12 +49,12 @@
           <row>
             <i-col span="12">
               <p style="text-align: center;border-right: 2px dotted #ccc ">
-                累计购买:<span class="item-remarks-num">{{goodsInfo.remarksNum}} 个</span>
+                累计购买:<span class="item-remarks-num">{{msg.saleNum}} 个</span>
               </p>
             </i-col>
             <i-col span="12">
               <p style="text-align: center">
-                累计评价:<span class="item-remarks-num">{{goodsInfo.remarksNum}} 条</span>
+                累计评价:<span class="item-remarks-num">{{msg.collectNum}} 条</span>
               </p>
             </i-col>
           </row>
@@ -67,7 +67,7 @@
           <InputNumber :min="1" v-model="count" size="large"></InputNumber>
           </i-col>
           <i-col span="12">
-          <p style="padding-top:2px;font-size: 20px">库存{{msg.}}</p>
+          <p style="padding-top:2px;font-size: 20px">库存{{msg.stock}}</p>
           </i-col>
         </row>
 
@@ -75,7 +75,7 @@
           <div class="add-buy-car">
 <row>
   <i-col span="12" style="text-align: right;padding-right: 10px">
-    <Button type="warning" style="height:60px;width:260px;font-size: 20px" @click="addShoppingCartBtn()">加入购物车</Button>
+    <Button type="warning" style="height:60px;width:260px;font-size: 20px" @click="addShoppingCartBtn(msg)">加入购物车</Button>
   </i-col>
   <i-col span="12" style="padding-left: 10px">
     <Button type="error" style="height:60px;width:260px;font-size: 20px" @click="buyShoppingCartBtn()">立即购买</Button>
@@ -96,6 +96,9 @@ export default {
   name: 'ShowGoods',
   props: {
     msg: {
+      default: ''
+    },
+    imgs: {
       default: ''
     }
   },
@@ -148,18 +151,22 @@ export default {
     showBigImg (index) {
       this.imgIndex = index;
     },
-    addShoppingCartBtn () {
-      const index1 = parseInt(this.selectBoxIndex / 3);
-      const index2 = this.selectBoxIndex % 3;
-      const date = new Date();
-      const goodsId = date.getTime();
+    addShoppingCartBtn (msg) {
       const data = {
-        goods_id: goodsId,
-        title: this.goodsInfo.title,
-        count: this.count,
-        package: this.goodsInfo.setMeal[index1][index2]
+        pid: msg.productId,
+        shopcart_num: this.count
       };
-      this.addShoppingCart(data);
+      // this.$http
+      //   .post('/shopCart/', JSON.stringify(data))
+      //   .then(resp => {
+      //     console.log(resp);
+      //     let res = resp.data.data;
+      //     if (res.code === 200) {
+      //       console.log(res);
+      //     } else {
+      //       this.$Message.error(res.msg);
+      //     }
+      //   });
       this.$router.push('/shoppingCart');
     },
     buyShoppingCartBtn () {
@@ -198,7 +205,7 @@ export default {
 }
 .item-detail-left {
   width: 500px;
-  margin-right: 80px;
+  margin-right: 50px;
 }
 .item-detail-big-img {
   width: 500px;
@@ -249,7 +256,7 @@ export default {
 /*价格详情等*/
 .item-detail-price-row {
   padding: 5px;
-  width: 780px;
+  width: 680px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 <!--    <Search></Search>-->
-    <HomeNav></HomeNav>
+    <HomeNav v-bind:navList="eatList"></HomeNav>
     <!-- 商品显示区域 -->
     <div class="content">
       <!-- 秒杀 -->
@@ -34,7 +34,7 @@
           <div class="seckill-item-info">
             <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
             <p>
-              <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.price}}</span>
+              <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.promotePrice}}</span>
               <span class="seckill-old-price"><s>{{item.price}}</s></span>
             </p>
           </div>
@@ -58,7 +58,7 @@
               <div class="seckill-item-info">
                 <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
                 <p>
-                  <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.price}}</span>
+                  <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.promotePrice}}</span>
                   <span class="seckill-old-price"><s>{{item.price}}</s></span>
                 </p>
               </div>

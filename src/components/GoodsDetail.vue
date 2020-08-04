@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Search></Search>
+<!--    <Search></Search>-->
 <!--    <ShopHeader></ShopHeader>
     <GoodsDetailNav></GoodsDetailNav> -->
     <div class="shop-item-path">
@@ -13,9 +13,9 @@
       </div>
     </div>
     <!-- 商品信息展示 -->
-    <ShowGoods v-bind:msg="detail"></ShowGoods>
+    <ShowGoods v-bind:msg="detail" v-bind:imgs="img"></ShowGoods>
     <!-- 商品详细展示 -->
-   <ShowGoodsDetail></ShowGoodsDetail>
+   <ShowGoodsDetail v-bind:imgs="img" v-bind:comments="comment"></ShowGoodsDetail>
     <Spin size="large" fix v-if="isLoading"></Spin>
   </div>
 </template>
@@ -37,12 +37,17 @@ export default {
   created () {
     var productId = this.$route.query.productId;
     this.getDetail(productId);
+    this.getImg(productId);
+    this.getComment(productId);
     this.pushId(productId);
     this.loadGoodsInfo();
+    sessionStorage.setItem('img', this.img);
   },
   data () {
     return {
       detail: [],
+      img: [],
+      comment: [],
       tagsColor: [ 'blue', 'green', 'red', 'yellow' ]
     };
   },
@@ -63,7 +68,35 @@ export default {
           }
         });
     },
-    pushId(productId){
+    getImg (productId) {
+      this.$http
+        .get('/productImage/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          this.img = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    getComment(productId) {
+      this.$http
+        .get('/comment/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          this.comment = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    pushId (productId) {
 
     }
 

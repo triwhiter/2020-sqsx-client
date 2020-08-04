@@ -78,7 +78,7 @@
     <Button type="warning" style="height:60px;width:260px;font-size: 20px" @click="addShoppingCartBtn(msg)">加入购物车</Button>
   </i-col>
   <i-col span="12" style="padding-left: 10px">
-    <Button type="error" style="height:60px;width:260px;font-size: 20px" @click="buyShoppingCartBtn()">立即购买</Button>
+    <Button type="error" style="height:60px;width:260px;font-size: 20px" @click="buyShoppingCartBtn(msg)">立即购买</Button>
   </i-col>
 </row>
 
@@ -151,25 +151,42 @@ export default {
     showBigImg (index) {
       this.imgIndex = index;
     },
+    // addShoppingCartBtn () {
+    //   const index1 = parseInt(this.selectBoxIndex / 3);
+    //   const index2 = this.selectBoxIndex % 3;
+    //   const date = new Date();
+    //   const goodsId = date.getTime();
+    //   const data = {
+    //     goods_id: goodsId,
+    //     title: this.goodsInfo.title,
+    //     count: this.count,
+    //     package: this.goodsInfo.setMeal[index1][index2]
+    //   };
+    //   this.addShoppingCart(data);
+    //   this.$router.push('/shoppingCart');
+    // },
     addShoppingCartBtn (msg) {
       const data = {
         pid: msg.productId,
-        shopcart_num: this.count
+        shopcartNum: this.count
       };
-      // this.$http
-      //   .post('/shopCart/', JSON.stringify(data))
-      //   .then(resp => {
-      //     console.log(resp);
-      //     let res = resp.data.data;
-      //     if (res.code === 200) {
-      //       console.log(res);
-      //     } else {
-      //       this.$Message.error(res.msg);
-      //     }
-      //   });
-      this.$router.push('/shoppingCart');
+      this.$http
+        .post('/shopCart/addShopCart', JSON.stringify(data))
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+      this.$router.push({
+        path: '/shoppingCart',
+        query: { data: data }
+      });
     },
-    buyShoppingCartBtn () {
+    buyShoppingCartBtn (msg) {
       const index1 = parseInt(this.selectBoxIndex / 3);
       const index2 = this.selectBoxIndex % 3;
       const date = new Date();
@@ -180,8 +197,11 @@ export default {
         count: this.count,
         package: this.goodsInfo.setMeal[index1][index2]
       };
-      this.addShoppingCart(data);
-      this.$router.push('/order');
+      this.addShoppingCartBtn(msg);
+      this.$router.push({
+        path: '/order',
+        query: { data: data }
+      });
     }
   },
   mounted () {

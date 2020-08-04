@@ -201,7 +201,7 @@ export const loadGoodsInfo = ({ commit }) => {
         param: [
           {
             title: '商品名称',
-            content: 'iPhone 7手机壳'
+            content: '三只松鼠XO酱味小贱牛肉粒'
           },
           {
             title: '商品编号',
@@ -209,7 +209,7 @@ export const loadGoodsInfo = ({ commit }) => {
           },
           {
             title: '店铺',
-            content: 'Gavin Shop'
+            content: '自营旗舰店'
           },
           {
             title: '商品毛重',
@@ -220,16 +220,12 @@ export const loadGoodsInfo = ({ commit }) => {
             content: '中国大陆'
           },
           {
-            title: '机型',
-            content: 'iPhone 7'
+            title: '原材料',
+            content: '面粉'
           },
           {
-            title: '材质',
-            content: 'PC/塑料'
-          },
-          {
-            title: '款式',
-            content: '软壳'
+            title: '类型',
+            content: '速食'
           },
           {
             title: '适用人群',
@@ -237,8 +233,8 @@ export const loadGoodsInfo = ({ commit }) => {
           }
         ],
         remarks: {
-          goodAnalyse: 90,
-          remarksTags: [ '颜色可人', '实惠优选', '严丝合缝', '极致轻薄', '质量没话说', '比定做还合适', '完美品质', '正品行货', '包装有档次', '不容易发热', '已经买第二个', '是全覆盖' ],
+          goodAnalyse: 40,
+          remarksTags: [ '美味可口', '实惠优选', '好吃', '有点辣', '已经买第二个'],
           remarksNumDetail: [ 2000, 3000, 900, 1 ],
           detail: [
             {

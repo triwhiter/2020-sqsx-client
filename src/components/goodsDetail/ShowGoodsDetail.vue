@@ -26,7 +26,7 @@
                 <span>商品介绍</span>
               </div>
               <div class="item-intro-img" ref="itemIntroGoods">
-                <img :src="beforeImg+item.imgUrl" alt="" v-for="(item,index) in imgs" :key="index">
+                    <img :src="beforeImg+item.imgUrl" style="width: 50%" alt="" v-for="(item,index) in imgs" :key="index" v-if="index<4">
               </div>
             </TabPane>
             <TabPane label="规格参数">

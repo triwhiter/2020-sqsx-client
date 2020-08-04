@@ -8,7 +8,7 @@ Axios.defaults.baseURL = "http://localhost:8088/api";
 // 设置请求头
 // Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 Axios.defaults.headers.post["Content-Type"] = "application/json;charset=UTF-8";
-// 这个Cookie不加通过工具类获取用户会有NPE问题
+// 这个Cookie不加通过工具类获取用户会有NPE
 Axios.defaults.withCredentials = true; //让ajax携带cookie
 
 Axios.interceptors.request.use(

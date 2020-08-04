@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Table border :columns="columns" :data="order" size="large" no-data-text="你还有订单，快点去购物吧"></Table>
+    <Table border :columns="columns" :data="order" size="large" no-data-text="你还没有订单，快点去购物吧"></Table>
     <div class="page-size">
       <Page :total="10" show-sizer></Page>
     </div>
@@ -13,8 +13,8 @@
     data() {
       return {
         order: [{
-          oid: '1',
-          // avatar: '',
+          id: '1',
+          avatar: '',
           store: 0,
           name: '',
           number: 0,
@@ -24,16 +24,25 @@
         }],
         columns: [{
             title: '订单号',
-            key: 'oid',
+            key: 'id',
             width: 200,
             align: 'center'
           },
-          // {
-          //   title: '图片',
-          //   src: 'avatar',
-
-          //   align: 'center'
-          // },
+        {
+          title: '图片',
+          key: 'img_url',
+          width: 220,
+          render: (h, params) => {
+            return h('div', [
+              h('img', {
+                attrs: {
+                  src: 'http://img14.360buyimg.com/n4/'+params.row.img_url
+                }
+              })
+            ]);
+          },
+          align: 'center'
+        },
           {
             title: '店铺名',
             key: 'store',

@@ -26,7 +26,7 @@
                 <span>商品介绍</span>
               </div>
               <div class="item-intro-img" ref="itemIntroGoods">
-                <img :src="item" alt="" v-for="(item,index) in goodsInfo.goodsDetail" :key="index">
+                <img :src="beforeImg+item.imgUrl" alt="" v-for="(item,index) in imgs" :key="index">
               </div>
             </TabPane>
             <TabPane label="规格参数">
@@ -65,7 +65,7 @@
                   <span>中评({{goodsInfo.remarks.remarksNumDetail[2]}})</span>
                   <span>差评({{goodsInfo.remarks.remarksNumDetail[3]}})</span>
                 </div>
-                <div class="remarks-box" v-for="(item,index) in goodsInfo.remarks.detail" :key="index">
+                <div class="remarks-box" v-for="(item,index) in comments" :key="index">
                   <div class="remarks-user">
                     <Avatar icon="person" />
                     <span class="remarks-user-name">{{item.username}}</span>
@@ -99,8 +99,17 @@ import store from '@/vuex/store';
 import { mapState } from 'vuex';
 export default {
   name: 'ShowGoodsDetail',
+  props: {
+    comments: {
+      default: ''
+    },
+    imgs: {
+      default: ''
+    }
+  },
   data () {
     return {
+      beforeImg: 'http://img14.360buyimg.com/n1/',
       tagsColor: [ 'blue', 'green', 'red', 'yellow' ]
     };
   },

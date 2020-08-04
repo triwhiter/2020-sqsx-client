@@ -9,8 +9,8 @@ const BASE_URL = 'http://localhost:8088/api';
 // 1、根据经纬度获取位置详情
 // export const reqAddress = (geohash) => ajax(`${BASE_URL}/position/${geohash}`);
 // 2、获取商品分类列表
-export const reqGoodCategorys = () => ajax(BASE_URL + '/Categorys/all');
-
 export const reqlogin = (form) => ajax(BASE_URL + '/login', form, "post");
 
 export const reqCategoryProduct = () => ajax(BASE_URL + '/product/allinCate');
+export const reqGoodCategorys = () => ajax(BASE_URL + '/bookclassify/all');
+export const reqIndexGoods = () => ajax(BASE_URL + '/product/allinCate');

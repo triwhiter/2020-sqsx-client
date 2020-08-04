@@ -149,7 +149,7 @@ export default {
 }
 .nav {
   margin: 0% auto;
-  width: 90%;
+  width: 76%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

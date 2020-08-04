@@ -3,18 +3,18 @@
     <div class="item-detail-show">
       <div class="item-detail-left">
         <div class="item-detail-big-img">
-          <img :src="goodsInfo.goodsImg[imgIndex]" alt="">
+          <img :src="beforeImg+imgs[imgIndex].imgUrl" alt="">
         </div>
         <div class="item-detail-img-row">
-          <div class="item-detail-img-small" v-for="(item, index) in goodsInfo.goodsImg" :key="index" @mouseover="showBigImg(index)">
-            <img :src="item" alt="">
+          <div class="item-detail-img-small" v-for="(item, index) in imgs" :key="index" @mouseover="showBigImg(index)">
+            <img :src="beforeImg+item.imgUrl" alt="">
           </div>
         </div>
       </div>
       <div class="item-detail-right">
         <div class="item-detail-title">
           <p>
-            <span class="item-detail-express">校园配送</span> {{goodsInfo.title}}</p>
+            <span class="item-detail-express">校园配送</span> {{msg.intro}}</p>
         </div>
         <div class="item-detail-tag">
           <p>
@@ -26,7 +26,7 @@
             <div class="item-price-row">
               <p>
                 <span class="item-price-title">B I T 价</span>
-                <span class="item-price">￥{{price.toFixed(2)}}</span>
+                <span class="item-price">￥{{msg.price}}</span>
               </p>
             </div>
             <div class="item-price-row">
@@ -42,51 +42,46 @@
               </p>
             </div>
           </div>
-          <div class="item-price-right">
-            <div class="item-remarks-sum">
-              <p>累计评价</p>
-              <p>
-                <span class="item-remarks-num">{{goodsInfo.remarksNum}} 条</span>
+        </div>
+
+        <div class="add-buy-car-number">
+          <br>
+          <row>
+            <i-col span="12">
+              <p style="text-align: center;border-right: 2px dotted #ccc ">
+                累计购买:<span class="item-remarks-num">{{msg.saleNum}} 个</span>
               </p>
-            </div>
-          </div>
+            </i-col>
+            <i-col span="12">
+              <p style="text-align: center">
+                累计评价:<span class="item-remarks-num">{{msg.collectNum}} 条</span>
+              </p>
+            </i-col>
+          </row>
+
+          <br>
         </div>
-        <!-- 选择颜色 -->
-        <div class="item-select">
-          <div class="item-select-title">
-            <p>选择颜色</p>
-          </div>
-          <div class="item-select-column">
-            <div class="item-select-row" v-for="(items, index) in goodsInfo.setMeal" :key="index">
-              <div class="item-select-box" v-for="(item, index1) in items" :key="index1" @click="select(index, index1)" :class="{'item-select-box-active': ((index * 3) + index1) === selectBoxIndex}">
-                <div class="item-select-img">
-                  <img :src="item.img" alt="">
-                </div>
-                <div class="item-select-intro">
-                  <p>{{item.intro}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 白条分期 -->
-        <div class="item-select">
-          <div class="item-select-title">
-            <p>白条分期</p>
-          </div>
-          <div class="item-select-row">
-            <div class="item-select-class" v-for="(item,index) in hirePurchase" :key="index">
-              <Tooltip :content="item.tooltip" placement="top-start">
-                <span>{{item.type}}</span>
-              </Tooltip>
-            </div>
-          </div>
-        </div>
-        <br>
+        <br><br>
+        <row>
+          <i-col span="3">
+          <InputNumber :min="1" v-model="count" size="large"></InputNumber>
+          </i-col>
+          <i-col span="12">
+          <p style="padding-top:2px;font-size: 20px">库存{{msg.stock}}</p>
+          </i-col>
+        </row>
+
         <div class="add-buy-car-box">
           <div class="add-buy-car">
-            <InputNumber :min="1" v-model="count" size="large"></InputNumber>
-            <Button type="error" size="large" @click="addShoppingCartBtn()">加入购物车</Button>
+<row>
+  <i-col span="12" style="text-align: right;padding-right: 10px">
+    <Button type="warning" style="height:60px;width:260px;font-size: 20px" @click="addShoppingCartBtn(msg)">加入购物车</Button>
+  </i-col>
+  <i-col span="12" style="padding-left: 10px">
+    <Button type="error" style="height:60px;width:260px;font-size: 20px" @click="buyShoppingCartBtn()">立即购买</Button>
+  </i-col>
+</row>
+
           </div>
         </div>
       </div>
@@ -99,8 +94,17 @@ import store from '@/vuex/store';
 import { mapState, mapActions } from 'vuex';
 export default {
   name: 'ShowGoods',
+  props: {
+    msg: {
+      default: ''
+    },
+    imgs: {
+      default: ''
+    }
+  },
   data () {
     return {
+      beforeImg: 'http://img14.360buyimg.com/n1/',
       price: 0,
       count: 1,
       selectBoxIndex: 0,
@@ -147,7 +151,25 @@ export default {
     showBigImg (index) {
       this.imgIndex = index;
     },
-    addShoppingCartBtn () {
+    addShoppingCartBtn (msg) {
+      const data = {
+        pid: msg.productId,
+        shopcart_num: this.count
+      };
+      // this.$http
+      //   .post('/shopCart/', JSON.stringify(data))
+      //   .then(resp => {
+      //     console.log(resp);
+      //     let res = resp.data.data;
+      //     if (res.code === 200) {
+      //       console.log(res);
+      //     } else {
+      //       this.$Message.error(res.msg);
+      //     }
+      //   });
+      this.$router.push('/shoppingCart');
+    },
+    buyShoppingCartBtn () {
       const index1 = parseInt(this.selectBoxIndex / 3);
       const index2 = this.selectBoxIndex % 3;
       const date = new Date();
@@ -159,7 +181,7 @@ export default {
         package: this.goodsInfo.setMeal[index1][index2]
       };
       this.addShoppingCart(data);
-      this.$router.push('/shoppingCart');
+      this.$router.push('/order');
     }
   },
   mounted () {
@@ -182,17 +204,18 @@ export default {
   background-color: #fff;
 }
 .item-detail-left {
-  width: 350px;
-  margin-right: 30px;
+  width: 500px;
+  margin-right: 50px;
 }
 .item-detail-big-img {
-  width: 350px;
-  height: 350px;
+  width: 500px;
+  height: 450px;
   box-shadow: 0px 0px 8px #ccc;
   cursor: pointer;
 }
 .item-detail-big-img img {
   width: 100%;
+  height: 450px;
 }
 .item-detail-img-row {
   margin-top: 15px;
@@ -233,10 +256,12 @@ export default {
 /*价格详情等*/
 .item-detail-price-row {
   padding: 5px;
+  width: 680px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: #f3f3f3;
+  margin-bottom: 20px;
 }
 .item-price-left {
   display: flex;
@@ -244,7 +269,7 @@ export default {
 }
 .item-price-title {
   color: #999999;
-  font-size: 14px;
+  font-size: 20px;
   margin-right: 15px;
 }
 .item-price-row {
@@ -252,7 +277,7 @@ export default {
 }
 .item-price {
   color: #e4393c;
-  font-size: 23px;
+  font-size: 40px;
   cursor: pointer;
 }
 .item-price-full-cut {
@@ -264,10 +289,7 @@ export default {
   border: 1px dotted #e4393c;
   cursor: pointer;
 }
-.item-remarks-sum {
-  padding-left: 8px;
-  border-left: 1px solid #ccc;
-}
+
 .item-remarks-sum p {
   color: #999999;
   font-size: 12px;
@@ -278,46 +300,7 @@ export default {
   line-height: 18px;
   color: #005eb7;
 }
-.item-select {
-  display: flex;
-  flex-direction: row;
-  margin-top: 15px;
-}
-.item-select-title {
-  color: #999999;
-  font-size: 14px;
-  margin-right: 15px;
-}
-.item-select-column {
-  display: flex;
-  flex-direction: column;
-}
-.item-select-row {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 8px;
-}
-.item-select-box {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.item-select-img {
-  width: 36px;
-}
-.item-select-box {
-  padding: 5px;
-  margin-right: 8px;
-  background-color: #f7f7f7;
-  border: 0.5px solid #ccc;
-  cursor: pointer;
-}
-.item-select-box:hover {
-  border: 0.5px solid #e3393c;
-}
-.item-select-box-active {
-  border: 0.5px solid #e3393c;
-}
+
 .item-select-img img {
   width: 100%;
 }
@@ -325,20 +308,16 @@ export default {
   margin: 0px;
   padding: 5px;
 }
-.item-select-class {
-  padding: 5px;
-  margin-right: 8px;
-  background-color: #f7f7f7;
-  border: 0.5px solid #ccc;
-  cursor: pointer;
-}
-.item-select-class:hover {
-  border: 0.5px solid #e3393c;
+
+.add-buy-car-number {
+  width: 100%;
+  margin-top: 15px;
+  border-top: 1px dotted #ccc;
+  border-bottom: 1px dotted #ccc;
 }
 .add-buy-car-box {
   width: 100%;
   margin-top: 15px;
-  border-top: 1px dotted #ccc;
 }
 .add-buy-car {
   margin-top: 15px;

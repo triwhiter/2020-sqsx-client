@@ -1,21 +1,21 @@
 <template>
   <div>
-    <Search></Search>
+<!--    <Search></Search>-->
 <!--    <ShopHeader></ShopHeader>
     <GoodsDetailNav></GoodsDetailNav> -->
     <div class="shop-item-path">
       <div class="shop-nav-container">
         <Breadcrumb>
           <BreadcrumbItem to="/">首页</BreadcrumbItem>
-          <BreadcrumbItem to="/goodsList">手机壳</BreadcrumbItem>
-          <BreadcrumbItem>手机保护套</BreadcrumbItem>
+          <BreadcrumbItem to="/goodsList">{{detail.shopName}}</BreadcrumbItem>
+          <BreadcrumbItem>{{detail.intro}}</BreadcrumbItem>
         </Breadcrumb>
       </div>
     </div>
     <!-- 商品信息展示 -->
-    <ShowGoods></ShowGoods>
+    <ShowGoods v-bind:msg="detail" v-bind:imgs="img"></ShowGoods>
     <!-- 商品详细展示 -->
-   <ShowGoodsDetail></ShowGoodsDetail>
+   <ShowGoodsDetail v-bind:imgs="img" v-bind:comments="comment"></ShowGoodsDetail>
     <Spin size="large" fix v-if="isLoading"></Spin>
   </div>
 </template>
@@ -35,18 +35,74 @@ export default {
     next();
   },
   created () {
-    this.loadGoodsInfo();
-    //取出商品列表页中传过来的商品id值
+    // 取出商品列表页中传过来的商品id值
     let pid = this.$route.query.pid;
     console.log(pid);
+    var productId = this.$route.query.productId;
+    this.getDetail(productId);
+    this.getImg(productId);
+    this.getComment(productId);
+    this.pushId(productId);
+    this.loadGoodsInfo();
+    sessionStorage.setItem('img', this.img);
   },
   data () {
     return {
+      detail: [],
+      img: [],
+      comment: [],
       tagsColor: [ 'blue', 'green', 'red', 'yellow' ]
     };
   },
   methods: {
-    ...mapActions(['loadGoodsInfo'])
+    ...mapActions(['loadGoodsInfo']),
+    getDetail (productId) {
+      const _this = this;
+      this.$http
+        .get('/products/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.detail = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    getImg (productId) {
+      this.$http
+        .get('/productImage/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          this.img = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    getComment(productId) {
+      this.$http
+        .get('/comment/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          this.comment = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    pushId (productId) {
+
+    }
+
   },
   computed: {
     ...mapState(['goodsInfo', 'isLoading'])

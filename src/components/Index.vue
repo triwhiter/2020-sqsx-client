@@ -1,120 +1,67 @@
 <template>
   <div class="container">
-    <Search></Search>
-    <HomeNav></HomeNav>
+<!--    <Search></Search>-->
+    <HomeNav v-bind:navList="eatList"></HomeNav>
     <!-- 商品显示区域 -->
     <div class="content">
       <!-- 秒杀 -->
       <div class="seckill">
-        <!-- 头部 -->
-        <div class="seckill-head">
-          <div class="seckill-icon">
-            <img src="static/img/index/clock.png">
-          </div>
-          <div class="seckill-text">
-            <span class="seckill-title">限时秒杀</span>
-            <span class="seckill-remarks">总有你想不到的低价</span>
-          </div>
-          <div class="count-down">
-            <span class="count-down-text">当前场次</span>
-            <span class="count-down-num count-down-hour">{{ seckillsHours }}</span>
-            <span class="count-down-point">:</span>
-            <span class="count-down-num count-down-minute">{{ seckillsMinutes }}</span>
-            <span class="count-down-point">:</span>
-            <span class="count-down-num count-down-seconds">{{ seckillsSeconds }}</span>
-            <span class="count-down-text">后结束抢购</span>
-          </div>
+      <!-- 头部 -->
+      <div class="seckill-head">
+        <div class="seckill-icon">
+          <img src="static/img/index/clock.png">
         </div>
-        <!-- 内容 -->
-        <div class="seckill-content">
-          <div class="seckill-item" v-for="(item, index) in seckills.goodsList" :key="index">
-            <div class="seckill-item-img">
-              <router-link to="/goodsList"><img :src="item.img"></router-link>
-            </div>
-            <div class="seckill-item-info">
-              <p>{{item.intro}}</p>
-              <p>
-                <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.price}}</span>
-                <span class="seckill-old-price"><s>{{item.realPrice}}</s></span>
-              </p>
-            </div>
+        <div class="seckill-text">
+          <span class="seckill-title">限时秒杀</span>
+          <span class="seckill-remarks">总有你想不到的低价</span>
+        </div>
+        <div class="count-down">
+          <span class="count-down-text">当前场次</span>
+          <span class="count-down-num count-down-hour">{{ seckillsHours }}</span>
+          <span class="count-down-point">:</span>
+          <span class="count-down-num count-down-minute">{{ seckillsMinutes }}</span>
+          <span class="count-down-point">:</span>
+          <span class="count-down-num count-down-seconds">{{ seckillsSeconds }}</span>
+          <span class="count-down-text">后结束抢购</span>
+        </div>
+      </div>
+      <!-- 内容 -->
+      <div class="seckill-content">
+        <div class="seckill-item" v-for="(item, index) in top5List" :key="index">
+          <div class="seckill-item-img">
+            <img :src="beforeImg+item.imgUrl" @click="eatDetail(item.productId )">
+          </div>
+          <div class="seckill-item-info">
+            <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
+            <p>
+              <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.promotePrice}}</span>
+              <span class="seckill-old-price"><s>{{item.price}}</s></span>
+            </p>
           </div>
         </div>
       </div>
-      <!-- 电脑专场 -->
-      <div class="item-class">
-        <div class="item-class-head">
-          <span class="item-class-title">{{computer.title}}</span>
-          <ul>
-            <li v-for="(item, index) in computer.link" :key="index">
-              <router-link to="/goodsList">{{item}}</router-link>
-            </li>
-          </ul>
-        </div>
-        <div class="item-class-content" v-for="(item, index) in computer.detail" :key="index">
-          <div class="item-content-top">
-            <div class="item-big-img">
-              <router-link to="/goodsList">
-                <img :src="item.bigImg" alt="">
-              </router-link>
-            </div>
-            <div class="item-four-img">
-              <div class="item-four-detail" v-for="(subItem, index) in item.itemFour" :key="index">
-                <div class="item-four-detail-text">
-                  <p class="pt_bi_tit">{{subItem.title}}</p>
-                  <p class="pt_bi_promo">{{subItem.intro}}</p>
-                </div>
-                <div class="item-four-detail-img">
-                  <router-link to="/goodsList">
-                    <img :src="subItem.img" alt="">
-                  </router-link>
-                </div>
+    </div>
+<!--      循环测试-->
+      <div>{{eat.code}}</div>
+      <div v-for="(item1, index1) in eatList"  :key='index1' >
+        <div class="seckill">
+          <!-- 头部 -->
+          <div :class="cssList[index1%4]">
+            <span class="item-class-title">{{item1.cname}}</span>
+          </div>
+          <!-- 内容 -->
+          <div class="seckill-content">
+            <div class="seckill-item" v-for="(item, index) in item1.products" :key="index" v-if="index<=4" >
+              <div class="seckill-item-img">
+                <img :src="beforeImg+item.imgUrl" @click="eatDetail(item.productId )">
               </div>
-            </div>
-          </div>
-          <div class="item-content-bottom">
-            <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
-              <router-link to="/goodsList">
-                <img :src="subImg">
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 爱吃专场 -->
-      <div class="item-class">
-        <div class="item-class-head item-class-eat-head">
-          <span class="item-class-title">{{eat.title}}</span>
-          <ul>
-            <li v-for="(item, index) in eat.link" :key="index">
-              <router-link to="/goodsList">{{item}}</router-link>
-            </li>
-          </ul>
-        </div>
-        <div class="item-class-content" v-for="(item, index) in eat.detail" :key="index">
-          <div class="item-content-top">
-            <div class="item-big-img">
-              <img :src="item.bigImg" alt="">
-            </div>
-            <div class="item-four-img">
-              <div class="item-four-detail" v-for="(subItem, index) in item.itemFour" :key="index">
-                <div class="item-four-detail-text">
-                  <p class="pt_bi_tit pt_bi_tit-eat">{{subItem.title}}</p>
-                  <p class="pt_bi_promo">{{subItem.intro}}</p>
-                </div>
-                <div class="item-four-detail-img">
-                  <router-link to="/goodsList">
-                    <img :src="subItem.img" alt="">
-                  </router-link>
-                </div>
+              <div class="seckill-item-info">
+                <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
+                <p>
+                  <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.promotePrice}}</span>
+                  <span class="seckill-old-price"><s>{{item.price}}</s></span>
+                </p>
               </div>
-            </div>
-          </div>
-          <div class="item-content-bottom">
-            <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
-              <router-link to="/goodsList">
-                <img :src="subImg">
-              </router-link>
             </div>
           </div>
         </div>
@@ -133,9 +80,10 @@ export default {
   created () {
     this.loadSeckillsInfo();
     this.loadCarouselItems();
-    this.loadComputer();
     this.loadEat();
     this.loadShoppingCart();
+    this.loadEatDetail();
+    this.loadTop5Detail();
   },
   mounted () {
     const father = this;
@@ -145,12 +93,58 @@ export default {
   },
   data () {
     return {
-      setIntervalObj: null
+      setIntervalObj: null,
+      top5List: [],
+      beforeImg: 'http://img14.360buyimg.com/n1/',
+      eatList: [],
+      cssList: ['item-class-head',
+        'item-class-head1',
+        'item-class-head2',
+        'item-class-head3',
+        'item-class-head4']
     };
   },
   methods: {
     ...mapActions(['loadSeckillsInfo', 'loadCarouselItems', 'loadComputer', 'loadEat', 'loadShoppingCart']),
-    ...mapMutations(['REDUCE_SECKILLS_TIME'])
+    ...mapMutations(['REDUCE_SECKILLS_TIME']),
+    loadEatDetail () {
+      const _this = this;
+      this.$http
+        .get('/products/allinCate')
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.eatList = res;
+          if (res.code === 200) {
+            console.log(res);
+
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    loadTop5Detail () {
+      const _this = this;
+      this.$http
+        .get('/products/top5')
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.top5List = res;
+          if (res.code === 200) {
+            console.log(res);
+
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    eatDetail (productId) {
+      this.$router.push({
+        path: '/goodsDetail',
+        query: { productId: productId }
+      });
+    }
   },
   computed: {
     ...mapState([ 'seckills', 'computer', 'eat' ]),
@@ -170,6 +164,7 @@ export default {
 <style scoped>
 .container {
   background-color: #F6F6F6;
+  padding-top: 20px;
 }
 .content {
   width: 1008px;
@@ -312,11 +307,29 @@ export default {
 .item-class-head {
   width: 100%;
   height: 50px;
-  background-color: #4488a7;
+  background-color: #6da6be;
 }
-.item-class-eat-head {
-  background-color: #ecb226;
+.item-class-head1 {
+  width: 100%;
+  height: 50px;
+  background-color: #FFFE1B;
 }
+.item-class-head2 {
+  width: 100%;
+  height: 50px;
+  background-color: #963CA7;
+}
+.item-class-head3 {
+  width: 100%;
+  height: 50px;
+  background-color: #4221a7;
+}
+.item-class-head4 {
+  width: 100%;
+  height: 50px;
+  background-color: #442217;
+}
+
 .item-class-head ul {
   list-style: none;
   float: right;
@@ -332,14 +345,99 @@ export default {
   text-decoration: none;
   color: #fff;
 }
-.item-class-eat-head a {
-  background-color: #eeb955;
-  border: 1px solid #eeb955;
-}
+
 .item-class-head a:hover {
   border: 1px solid #fff;
 }
 .item-class-head li {
+  float: left;
+}
+.item-class-head1 ul {
+  list-style: none;
+  float: right;
+  margin-right: 30px;
+  line-height: 50px;
+}
+.item-class-head1 a {
+  padding: 6px;
+  margin-left: 15px;
+  font-size: 12px;
+  background-color: #6da6be;
+  border: 1px solid #6da6be;
+  text-decoration: none;
+  color: #fff;
+}
+
+.item-class-head1 a:hover {
+  border: 1px solid #fff;
+}
+.item-class-head1 li {
+  float: left;
+}
+.item-class-head2 ul {
+  list-style: none;
+  float: right;
+  margin-right: 30px;
+  line-height: 50px;
+}
+.item-class-head2 a {
+  padding: 6px;
+  margin-left: 15px;
+  font-size: 12px;
+  background-color: #6da6be;
+  border: 1px solid #6da6be;
+  text-decoration: none;
+  color: #fff;
+}
+
+.item-class-head2 a:hover {
+  border: 1px solid #fff;
+}
+.item-class-head2 li {
+  float: left;
+}
+.item-class-head3 ul {
+  list-style: none;
+  float: right;
+  margin-right: 30px;
+  line-height: 50px;
+}
+.item-class-head3 a {
+  padding: 6px;
+  margin-left: 15px;
+  font-size: 12px;
+  background-color: #6da6be;
+  border: 1px solid #6da6be;
+  text-decoration: none;
+  color: #fff;
+}
+
+.item-class-head4 ul {
+  list-style: none;
+  float: right;
+  margin-right: 30px;
+  line-height: 50px;
+}
+.item-class-head4 a {
+  padding: 6px;
+  margin-left: 15px;
+  font-size: 12px;
+  background-color: #6da6be;
+  border: 1px solid #6da6be;
+  text-decoration: none;
+  color: #fff;
+}
+
+.item-class-head4 a:hover {
+  border: 1px solid #fff;
+}
+.item-class-head4 li {
+  float: left;
+}
+.item-class-head3 a:hover {
+  border: 1px solid #fff;
+}
+.item-class-head3 li {
   float: left;
 }
 .item-class-title {

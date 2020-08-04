@@ -37,12 +37,19 @@ export default {
   created () {
     // 取出商品列表页中传过来的商品id值
     let pid = this.$route.query.pid;
-    console.log(pid);
     var productId = this.$route.query.productId;
-    this.getDetail(productId);
-    this.getImg(productId);
-    this.getComment(productId);
-    this.pushId(productId);
+    if(pid == null){
+      this.getDetail(productId);
+      this.getImg(productId);
+      this.getComment(productId);
+      this.pushId(productId);
+    }
+    if (productId == null) {
+      this.getDetail(pid);
+      this.getImg(pid);
+      this.getComment(pid);
+      this.pushId(pid);
+    }
     this.loadGoodsInfo();
     sessionStorage.setItem('img', this.img);
   },

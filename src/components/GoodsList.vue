@@ -169,11 +169,14 @@ export default {
   watch: {
     $route: function(to, from) {
       if (this.$route.query.id == null) {
-        this.keyword = this.$route.query.sreachData;
+        this.keyword = this.$route.query.keyword;
       }
-      if (this.$route.query.sreachData == null) {
+      if (this.$route.query.keyword == null) {
         this.cid = this.$route.query.cid;
+        this.keyword = "null";
       }
+      this.current = 1;
+      this.pageSize = 10;
       this.loadGoodsList();
     }
   },

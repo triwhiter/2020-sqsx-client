@@ -26,7 +26,7 @@ export default {
       this.sreachData = this.promotionTags[index];
     },
     sreach () {
-      this.$router.push({path: '/goodsList', query: { sreachData: this.sreachData }});
+      this.$router.push({path: '/goodsList', query: { keyword: this.sreachData }});
     }
   }
 };

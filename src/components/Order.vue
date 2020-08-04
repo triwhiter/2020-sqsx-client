@@ -25,8 +25,8 @@
                 选择地址
                 <p slot="content">
                   <RadioGroup vertical size="large" @on-change="changeAddress">
-                    <Radio :label="item.addressId" v-for="(item, index) in address" :key="index">
-                      <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.postalcode}}</span>
+                    <Radio :label="item.id" v-for="(item, index) in address" :key="index">
+                      <span>{{item.receiver}} {{item.street}} {{item.phone}} {{item.zipCode}}</span>
                     </Radio>
                   </RadioGroup>
                 </p>
@@ -58,7 +58,7 @@
 import Search from '@/components/Search';
 import GoodsListNav from '@/components/nav/GoodsListNav';
 import store from '@/vuex/store';
-import { mapState, mapActions } from 'vuex';
+// import { mapState, mapActions } from 'vuex';
 export default {
   name: 'Order',
   beforeRouteEnter (to, from, next) {
@@ -66,15 +66,16 @@ export default {
     next();
   },
   created () {
-    //
+    this.getUser();
     this.loadAddress();
-    this.loadShopping();
+    this.loadShoppingCart();
   },
   data () {
     return {
       goodsCheckList: [],
-      shopping: [],
-      Address: [],
+      shoppingCart: [],
+      address: [],
+      user: {},
       columns: [
         {
           type: 'selection',
@@ -128,7 +129,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(['address', 'shoppingCart']),
+    // ...mapState(['address', 'shoppingCart']),
     totalPrice () {
       let price = 0;
       this.goodsCheckList.forEach(item => {
@@ -138,7 +139,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['loadAddress']),
+    // ...mapActions(['loadAddress']),
     select (selection, row) {
       console.log(selection);
       this.goodsCheckList = selection;
@@ -146,15 +147,36 @@ export default {
     changeAddress (data) {
       const father = this;
       this.address.forEach(item => {
-        if (item.addressId === data) {
-          father.checkAddress.name = item.name;
-          father.checkAddress.address = `${item.name} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.postalcode}`;
+        if (item.id === data) {
+          father.checkAddress.name = item.receiver;
+          father.checkAddress.address = `${item.receiver} ${item.street} ${item.phone} ${item.zipCode}`;
         }
       });
     },
     submitOrder () {
       let total = this.totalPrice.toFixed(2);
-    }
+    },
+    getUser() {
+      this.user = JSON.parse(sessionStorage.getItem('loginInfo'));
+    },
+    loadAddress () {
+      this.$http
+      .get('/address/getAllAddress/' + this.user.id)
+      .then(resp => {
+        console.log(resp);
+        let res = resp.data;
+        if(res.code == 200) {
+          this.address = res.data;
+          console.log(this.address);
+        } else {
+          this.$Message.error(res.msg);
+        }
+      });
+    },
+    //获取购物车信息
+    loadShoppingCart () {
+
+    },
   },
   mounted () {
     setTimeout(() => {

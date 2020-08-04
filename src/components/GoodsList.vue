@@ -8,7 +8,7 @@
           <BreadcrumbItem to="/">
             <Icon type="ios-home-outline"></Icon> 首页
           </BreadcrumbItem>
-          <BreadcrumbItem to="/goodsList?keyword=">
+          <BreadcrumbItem>
             <Icon type="bag"></Icon>
           </BreadcrumbItem>
         </Breadcrumb>

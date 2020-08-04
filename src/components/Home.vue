@@ -62,8 +62,10 @@
     name: 'Home',
     data() {
       return {
-        ava: 'https://cdn2.jianshu.io/assets/default_avatar/11-4d7c6ca89f439111aff57b23be1c73ba.jpg',
-        nickname: '无名',
+        ava: '/static/img/freeback.png',
+        // ava:'https://bkimg.cdn.bcebos.com/pic/03087bf40ad162d98635f82b13dfa9ec8a13cd2a?x-bce-process=image/watermark,image_d2F0ZXIvYmFpa2U4MA==,g_7,xp_5,yp_5',
+
+       nickname: '无名',
         activeTitle: '我的订单',
         bar: {
           'userInfo': '我的资料',

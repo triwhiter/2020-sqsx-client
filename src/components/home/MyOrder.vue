@@ -2,7 +2,9 @@
   <div>
     <Table border :columns="columns" :data="order" size="large" no-data-text="你还没有订单，快点去购物吧"></Table>
     <div class="page-size">
-      <Page :total="10" show-sizer></Page>
+      <template>
+          <Page :total="total" :page-size="pageSize" prev-text="Previous" next-text="Next" @on-change="change" />
+      </template>
     </div>
   </div>
 </template>
@@ -22,6 +24,9 @@
           // title: '',
           create_time: ''
         }],
+        total:10,
+        pageSize:1,
+
         columns: [{
             title: '订单号',
             key: 'id',
@@ -76,6 +81,22 @@
         ]
       };
     },
+    methods:{
+      change:function(current){
+        console.log(current)
+        let user = sessionStorage.getItem('loginInfo');
+        let userin = (JSON.parse(user));
+        this.$http
+        .get('/orderList/getOrderInfoPage/'+userin.id+'/'+current+'/1')
+        .then(resp => {
+          if(resp.data.code == 200){
+            console.log("查询成功")
+          }
+        })
+
+      }
+    },
+
     created: function() {
       console.log(this.order[0].oid)
       const _this = this;

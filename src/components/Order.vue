@@ -150,11 +150,9 @@ export default {
         if (item.id === data) {
           father.checkAddress.name = item.receiver;
           father.checkAddress.address = `${item.receiver} ${item.street} ${item.phone} ${item.zipCode}`;
+          sessionStorage.setItem("addressId", item.id);
         }
       });
-    },
-    submitOrder () {
-      let total = this.totalPrice.toFixed(2);
     },
     getUser() {
       this.user = JSON.parse(sessionStorage.getItem('loginInfo'));
@@ -190,9 +188,34 @@ export default {
         }
       });
     },
-    //支付订单，传输商品id列表，总价，留言，收货地址id,用户id
+    //支付订单，传输商品id列表，总价，备注，收货地址id,用户id
     submitOrder () {
-
+      let pids = [];
+      let nums = [];
+      this.goodsCheckList.forEach(item =>{
+        pids.push(item.pid);
+        nums.push(item.shopcart_num);
+      });
+      let total = this.totalPrice.toFixed(2);
+      let data = {
+         pids: pids,
+         nums: nums,
+         amount: parseFloat(total),
+         message: this.remarks,
+         aid: parseInt(sessionStorage.getItem("addressId"))
+      };
+      console.log(data);
+      this.$http
+      .post('/orderList/', data)
+      .then(resp => {
+        let res = resp.data;
+        console.log(res);
+        if(res.code == 200) {
+          this.$Message.success(res.msg);
+        } else {
+          this.$Message.error(res.msg);
+        }
+      });
     }
   },
   mounted () {

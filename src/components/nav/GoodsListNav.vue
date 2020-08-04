@@ -3,9 +3,10 @@
     <div class="search-nav">
       <div class="search-nav-container">
         <ul >
-          <li><router-link :to="{name: 'GoodsList', query :{cid: 0}}">全部商品</router-link></li>
+          <li :class="activeClass == -1 ? 'active' : ''" @click="onload(-1)"><router-link :to="{name: 'GoodsList', query :{cid: 0}}">全部商品</router-link></li>
           <li v-for="(item,index) in category"
-            :key="index" @click="onload(item)"><router-link :to="{name: 'GoodsList', query :{cid: item.id}}">{{item.name}}</router-link></li>
+            :key="index" @click="onload(index)"
+            :class="activeClass == index ? 'active' : ''"><router-link :to="{name: 'GoodsList', query :{cid: item.id}}">{{item.name}}</router-link></li>
 <!--          <li><router-link to="/">服装城</router-link></li>
           <li><router-link to="/">美妆馆</router-link></li>
           <li><router-link to="/">BIT超市</router-link></li>
@@ -25,7 +26,8 @@ export default {
   name: 'GoodsListNav',
   data () {
     return {
-      category: []
+      category: [],
+      activeClass: -1
     };
   },
   methods: {
@@ -42,8 +44,8 @@ export default {
          }
        })
     },
-    onload(item) {
-
+    onload(index) {
+      this.activeClass = index;
     }
   },
   created() {
@@ -85,10 +87,18 @@ export default {
   color: #C81623;
   text-decoration: none;
 }
-.search-nav-container li:first-child{
+/* .search-nav-container li:first-child{
   padding: 0px 38px;
-/*  background:#B1191A; */
+ background:#B1191A;
   margin: 0px;
   color: #fff;
+} */
+.active{
+  padding: 0px 38px;
+  margin: 0px;
+  background:#B1191A;
+}
+.active a{
+  color: #fff !important;
 }
 </style>

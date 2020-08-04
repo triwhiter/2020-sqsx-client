@@ -121,7 +121,7 @@
         const _this = this;
         let user = _this.formData;
         _this.$http
-          .get('/user/updata', user)
+          .put('/user/editUser', user)
           .then(resp => {
             console.log(resp)
             if (resp.data.code == 200) {

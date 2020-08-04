@@ -84,13 +84,13 @@ export default {
         },
         {
           title: '图片',
-          key: 'img',
+          key: 'img_url',
           width: 86,
           render: (h, params) => {
             return h('div', [
               h('img', {
                 attrs: {
-                  src: params.row.img
+                  src: params.row.img_url
                 }
               })
             ]);
@@ -99,25 +99,25 @@ export default {
         },
         {
           title: '商品名称',
-          key: 'title',
+          key: 'name',
           align: 'center'
         },
         {
           title: '所属类别',
           width: 198,
-          key: 'package',
+          key: 'store',
           align: 'center'
         },
         {
           title: '数量',
-          key: 'count',
+          key: 'shopcart_num',
           width: 68,
           align: 'center'
         },
         {
           title: '单价',
           width: 68,
-          key: 'price',
+          key: 'promote_price',
           align: 'center'
         }
       ],
@@ -133,7 +133,7 @@ export default {
     totalPrice () {
       let price = 0;
       this.goodsCheckList.forEach(item => {
-        price += item.price * item.count;
+        price += item.promote_price * item.shopcart_num;
       });
       return price;
     }
@@ -150,11 +150,9 @@ export default {
         if (item.id === data) {
           father.checkAddress.name = item.receiver;
           father.checkAddress.address = `${item.receiver} ${item.street} ${item.phone} ${item.zipCode}`;
+          sessionStorage.setItem("addressId", item.id);
         }
       });
-    },
-    submitOrder () {
-      let total = this.totalPrice.toFixed(2);
     },
     getUser() {
       this.user = JSON.parse(sessionStorage.getItem('loginInfo'));
@@ -173,10 +171,52 @@ export default {
         }
       });
     },
-    //获取购物车信息
+    //获取购物车信息 shoppingCart
     loadShoppingCart () {
-
+      this.$http
+      .get('/shopCart/findShopCart/' + this.user.id)
+      .then(resp => {
+        let res = resp.data;
+        let beforeImg = "http://img14.360buyimg.com/n5/";
+        if(res.code == 200) {
+          res.data.forEach(item => {
+            item.img_url = beforeImg + item.img_url;
+          });
+          this.shoppingCart = res.data;
+        } else {
+          this.$Message.error(res.msg);
+        }
+      });
     },
+    //支付订单，传输商品id列表，总价，备注，收货地址id,用户id
+    submitOrder () {
+      let pids = [];
+      let nums = [];
+      this.goodsCheckList.forEach(item =>{
+        pids.push(item.pid);
+        nums.push(item.shopcart_num);
+      });
+      let total = this.totalPrice.toFixed(2);
+      let data = {
+         pids: pids,
+         nums: nums,
+         amount: parseFloat(total),
+         message: this.remarks,
+         aid: parseInt(sessionStorage.getItem("addressId"))
+      };
+      console.log(data);
+      this.$http
+      .post('/orderList/', data)
+      .then(resp => {
+        let res = resp.data;
+        console.log(res);
+        if(res.code == 200) {
+          this.$Message.success(res.msg);
+        } else {
+          this.$Message.error(res.msg);
+        }
+      });
+    }
   },
   mounted () {
     setTimeout(() => {

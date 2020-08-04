@@ -173,7 +173,10 @@ export default {
       }
       if (this.$route.query.keyword == null) {
         this.cid = this.$route.query.cid;
+        this.keyword = "null";
       }
+      this.current = 1;
+      this.pageSize = 10;
       this.loadGoodsList();
     }
   },

@@ -19,7 +19,7 @@
           name: '',
           number: 0,
           amount: 0,
-          title: '',
+          // title: '',
           create_time: ''
         }],
         columns: [{
@@ -35,7 +35,7 @@
           //   align: 'center'
           // },
           {
-            title: '标题',
+            title: '店铺名',
             key: 'store',
             align: 'center',
             width: 200,
@@ -77,7 +77,7 @@
         .get('/orderList/getOrderInfo/' + userin.id)
         .then(resp => {
           console.log("打印order")
-          console.log(resp.data.data.length)
+          console.log(resp.data.data)
           _this.total = resp.data.data.length
 
 

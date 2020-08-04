@@ -13,8 +13,8 @@
             <i-input v-model="formData.receiver" size="large"></i-input>
           </FormItem>
           <FormItem label="收件地区" prop="address">
-            <Distpicker :province="formData.province" :city="formData.city" :area="formData.area" @province="getProvince"
-              @city="getCity" @area="getArea"></Distpicker>
+            <Distpicker :province="formData.province" :city="formData.city" :hhh="formData.hhh" @province="getProvince"
+              @city="getCity" @hhh="getArea"></Distpicker>
           </FormItem>
           <FormItem label="收件地址" prop="street">
             <i-input v-model="formData.street" size="large"></i-input>
@@ -50,7 +50,9 @@
           zipCode: '',
           province: '湖北省',
           city: '宜昌市',
-          area: '西陵区',
+          hhh: '西陵区',
+          area:'',
+
           uid: '',
           receiver: '',
 
@@ -98,11 +100,12 @@
       getCity(data) {
         this.formData.city = data.value;
       },
-      getArea(data) {
+      getHhh(data) {
         this.formData.area = data.value;
       },
       addAddress: function() {
         const _this = this;
+        _this.formData.area = _this.formData.province+_this.formData.city+_this.formData.hhh;
         _this.$http
           .post('/address/addAddress', this.formData)
           .then(resp => {

@@ -18,7 +18,7 @@
           <FormItem label="手机号码" prop="phone">
             <i-input v-model="formData.phoneNumber" size="large"></i-input>
           </FormItem>
-          <FormItem label="性别" prop="sex" >
+          <FormItem label="性别" prop="sex">
             <i-input v-model="formData.sex" size="large"></i-input>
           </FormItem>
           <FormItem label="性别" prop="id" hidden="true">
@@ -60,6 +60,8 @@
   import Distpicker from 'v-distpicker';
   export default {
     name: 'UserInfo',
+    //注入依赖
+    inject: ['reload'],
     data() {
       return {
         // uid: tihs.$route.query.id,
@@ -127,9 +129,22 @@
             if (resp.data.code == 200) {
 
               _this.$Message.info('成功修改', 3);
-
+              _this.reload();
+              _this.getInfo()
             }
           });
+      },
+      getInfo: function() {
+
+        this.$http
+          .get('/user/getUserInfo')
+          .then(resp => {
+            if (resp.data.code == 200) {
+              console.log(resp.data.data)
+              this.formData = resp.data.data
+            }
+
+          })
       }
     },
     components: {
@@ -141,17 +156,17 @@
       let userin = (JSON.parse(user));
       console.log(JSON.parse(user))
       _this.formData.nickName = userin.nickName;
-       _this.formData.userName = userin.userName;
+      _this.formData.userName = userin.userName;
       _this.formData.phoneNumber = userin.phoneNumber;
       _this.formData.sex = userin.sex;
       _this.formData.email = userin.email;
       _this.formData.avatar = userin.avatar;
-       _this.formData.id= userin.id;
+      _this.formData.id = userin.id;
       _this.formData.level = userin.level;
       _this.formData.password = userin.password;
       _this.formData.createTime = userin.createTime;
-       _this.formData.updateTime = userin.updateTime;
-       _this.formData.integral = userin.integral;
+      _this.formData.updateTime = userin.updateTime;
+      _this.formData.integral = userin.integral;
     }
   };
 </script>

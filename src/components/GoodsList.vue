@@ -41,7 +41,7 @@
                 <router-link
                   :to="{ name: 'GoodsDetail', query: { pid: item.productId } }"
                   ><img
-                    :src="beforeImg + item.imgUrl"
+                    :src="beforeImg + item.imgUrl[0]"
                     style="width: 100%;height: 100%;"
                 /></router-link>
               </div>

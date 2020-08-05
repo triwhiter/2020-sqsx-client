@@ -191,8 +191,9 @@
           .get('/user/getUserInfo')
           .then(resp => {
             if (resp.data.code == 200) {
-              console.log(resp.data.data)
-              this.formData = resp.data.data
+              console.log("修改后")
+              console.log(resp.data)
+              this.formData = resp.data
             }
 
           })

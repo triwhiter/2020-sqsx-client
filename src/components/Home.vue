@@ -51,7 +51,7 @@
             <router-view></router-view>
           </transition>
         </Content>
-        <Footer class="layout-footer-center">2018 &copy; Gavin</Footer>
+        <Footer class="layout-footer-center">Copyright &copy; 2020</Footer>
       </Layout>
     </Layout>
   </div>

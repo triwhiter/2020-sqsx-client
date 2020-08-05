@@ -13,6 +13,9 @@
 <script>
   export default {
     name: 'MyShoppingCart',
+    //注入依赖
+    inject: ['reload'],
+
     data() {
       return {
         columns: [{
@@ -32,7 +35,7 @@
               return h('div', [
                 h('img', {
                   attrs: {
-                    src: 'http://img14.360buyimg.com/n4/'+params.row.img_url
+                    src: 'http://img14.360buyimg.com/n4/' + params.row.img_url
                   }
                 })
               ]);
@@ -75,12 +78,12 @@
         ],
         dataForm: [{
             store: ' ',
-            name:' ',
-            img_url:' ',
-            promote_price:0,
-            original_price:0,
-            shopcart_num:0,
-            pid:''
+            name: ' ',
+            img_url: ' ',
+            promote_price: 0,
+            original_price: 0,
+            shopcart_num: 0,
+            pid: ''
           },
 
         ]
@@ -98,43 +101,39 @@
         let user = sessionStorage.getItem('loginInfo');
         let userin = (JSON.parse(user));
         this.$http
-          .delete('/shopCart/del/' + userin.id+ '/'+index)
+          .delete('/shopCart/del/' + userin.id + '/' + index)
           .then(resp => {
 
-            if(resp.data.code == 200){
+            if (resp.data.code == 200) {
               console.log("删除成功")
               this.$Message.info('删除成功', 3);
-              this.$router.push({
-                path: '/home/MyOrder'
-              })
+              this.reload()
             }
 
             console.log(resp.data.code)
 
           })
       },
-      delAll:function(){
+      delAll: function() {
         let user = sessionStorage.getItem('loginInfo');
         let userin = (JSON.parse(user));
         this.$http
           .delete('/shopCart/del/' + userin.id)
           .then(resp => {
 
-            if(resp.data.code == 200){
+            if (resp.data.code == 200) {
               console.log("删除成功")
               this.$Message.info('全部删除', 3);
-              this.$router.push({
-                path: '/home/MyOrder'
-              })
+              this.reload()
             }
             console.log(resp.data.code)
 
           })
       },
-      goTo:function(){
-       this.$router.push({
-         path: '/Order'
-       })
+      goTo: function() {
+        this.$router.push({
+          path: '/Order'
+        })
       }
     },
     created: function() {
@@ -160,7 +159,8 @@
     display: flex;
     justify-content: flex-end;
   }
-  button{
-    margin-right:30px;
-    }
+
+  button {
+    margin-right: 30px;
+  }
 </style>

@@ -14,16 +14,18 @@
     name: 'MyOrder',
     data() {
       return {
-        order: [{
-          id: '1',
-          avatar: '',
-          store: 0,
-          name: '',
-          number: 0,
-          amount: 0,
-          // title: '',
-          create_time: ''
-        }],
+        order: [
+          // {
+        //   id: '1',
+        //   avatar: '',
+        //   store: '',
+        //   name: '',
+        //   number: 0,
+        //   amount: 0,
+        //   // title: '',
+        //   create_time: ''
+        // }
+        ],
         total:10,
         pageSize:1,
 
@@ -31,6 +33,18 @@
             title: '订单号',
             key: 'id',
             width: 200,
+            align: 'center'
+          },
+          {
+            title: '店铺名',
+            key: 'store',
+            align: 'center',
+            width: 200,
+          },
+          {
+            title: '名称',
+            width: 200,
+            key: 'name',
             align: 'center'
           },
         {
@@ -48,18 +62,7 @@
           },
           align: 'center'
         },
-          {
-            title: '店铺名',
-            key: 'store',
-            align: 'center',
-            width: 200,
-          },
-          {
-            title: '名称',
-            width: 200,
-            key: 'name',
-            align: 'center'
-          },
+
           {
             title: '数量',
             key: 'number',
@@ -87,10 +90,15 @@
         let user = sessionStorage.getItem('loginInfo');
         let userin = (JSON.parse(user));
         this.$http
-        .get('/orderList/getOrderInfoPage/'+userin.id+'/'+current+'/1')
+        .get('/orderList/getOrderInfoPage/'+userin.id+'/'+current+'/6')
         .then(resp => {
           if(resp.data.code == 200){
             console.log("查询成功")
+            console.log(resp.data.data)
+            this.total = resp.data.data.total/resp.data.data.size;
+            this.pageSize = resp.data.data.size;
+
+            this.order = resp.data.data;
           }
         })
 
@@ -102,19 +110,31 @@
       const _this = this;
       let user = sessionStorage.getItem('loginInfo');
       let userin = (JSON.parse(user));
-      // _this.formData.uid = userin.id
+
+      // _this.$http
+      //   .get('/orderList/getOrderInfo/' + userin.id)
+      //   .then(resp => {
+      //     console.log("打印order")
+      //     console.log(resp.data.data)
+      //     _this.total = resp.data.data.length
+
+
+      //     _this.order = resp.data.data
+
+
+      //   })
+
       _this.$http
-        .get('/orderList/getOrderInfo/' + userin.id)
-        .then(resp => {
-          console.log("打印order")
+      .get('/orderList/getOrderInfoPage/'+userin.id+'/2' +'/6')
+      .then(resp => {
+        if(resp.data.code == 200){
+          console.log("查询成功")
           console.log(resp.data.data)
-          _this.total = resp.data.data.length
-
-
-          _this.order = resp.data.data
-
-
-        })
+          _this.total = resp.data.data.total/resp.data.data.size;
+          _this.pageSize = resp.data.data.size;
+          _this.order = resp.data.data;
+        }
+      })
     }
   };
 </script>

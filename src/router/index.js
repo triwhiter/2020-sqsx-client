@@ -24,8 +24,7 @@ const GoodsListNav = resolve => require(['@/components/nav/GoodsListNav.vue'], r
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/', // 首页
       name: 'Index',
       component: Index
@@ -44,8 +43,7 @@ export default new Router({
       path: '/SignUp', // 注册
       name: 'SignUp',
       component: SignUp,
-      children: [
-        {
+      children: [{
           path: '/',
           name: 'index',
           component: CheckPhone
@@ -80,7 +78,7 @@ export default new Router({
     {
       path: '/shoppingCart', // 商品详情
       name: 'ShoppingCart',
-      component: ShoppingCart
+      component: ShoppingCart,
     },
     {
       path: '/order', // 订单页面
@@ -106,36 +104,59 @@ export default new Router({
       path: '/home', // 主页
       name: 'Home',
       component: Home,
-      children: [
-        {
+      meta: {
+        requiresAuth: true
+      },
+
+
+      children: [{
           path: '/',
           name: 'HomeIndex',
-          component: MyOrder
+          component: MyOrder,
+          meta: {
+            requiresAuth: true
+          },
+
         },
         {
           path: 'UserInfo',
           name: 'UserInfo',
-          component: UserInfo
+          component: UserInfo,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'myAddress',
           name: 'MyAddress',
-          component: MyAddress
+          component: MyAddress,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'addAddress',
           name: 'AddAddress',
-          component: AddAddress
+          component: AddAddress,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'myOrder',
           name: 'MyOrder',
-          component: MyOrder
+          component: MyOrder,
+          meta: {
+            requiresAuth: true
+          }
         },
         {
           path: 'myShoppingCart',
           name: 'MyShoppingCart',
-          component: MyShoppingCart
+          component: MyShoppingCart,
+          meta: {
+            requiresAuth: true
+          }
         }
       ]
     },
@@ -144,5 +165,6 @@ export default new Router({
       name: 'Merchant',
       component: Merchant
     }
-  ]
+  ],
+
 });

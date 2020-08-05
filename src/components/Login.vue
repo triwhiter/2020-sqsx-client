@@ -89,6 +89,7 @@ export default {
             let res = response.data;
             console.log(res);
             if (res.code === 200) {
+
               this.$Message.success(res.msg);
               this.login(res.data);
               father.$router.push("/");

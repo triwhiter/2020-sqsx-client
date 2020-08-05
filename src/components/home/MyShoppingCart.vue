@@ -76,15 +76,16 @@
             }
           }
         ],
-        dataForm: [{
-            store: ' ',
-            name: ' ',
-            img_url: ' ',
-            promote_price: 0,
-            original_price: 0,
-            shopcart_num: 0,
-            pid: ''
-          },
+        dataForm: [
+          // {
+          //   store: ' ',
+          //   name: ' ',
+          //   img_url: ' ',
+          //   promote_price: 0,
+          //   original_price: 0,
+          //   shopcart_num: 0,
+          //   pid: ''
+          // },
 
         ]
       }

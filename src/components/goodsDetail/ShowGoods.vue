@@ -3,22 +3,30 @@
     <div class="item-detail-show">
       <div class="item-detail-left">
         <div class="item-detail-big-img">
-          <img :src="beforeImg+imgs[imgIndex].imgUrl" alt="">
+          <img v-lazy="imgs[imgIndex].imgUrl" alt="" />
         </div>
         <div class="item-detail-img-row">
-          <div class="item-detail-img-small" v-for="(item, index) in imgs" :key="index" @mouseover="showBigImg(index)">
-            <img :src="beforeImg+item.imgUrl" alt="">
+          <div
+            class="item-detail-img-small"
+            v-for="(item, index) in imgs"
+            :key="index"
+            @mouseover="showBigImg(index)"
+          >
+            <img v-lazy="item.imgUrl" alt="" />
           </div>
         </div>
       </div>
       <div class="item-detail-right">
         <div class="item-detail-title">
           <p>
-            <span class="item-detail-express">校园配送</span> {{msg.intro}}</p>
+            <span class="item-detail-express">校园配送</span> {{ msg.intro }}
+          </p>
         </div>
         <div class="item-detail-tag">
           <p>
-            <span v-for="(item,index) in goodsInfo.tags" :key="index">【{{item}}】</span>
+            <span v-for="(item, index) in goodsInfo.tags" :key="index"
+              >【{{ item }}】</span
+            >
           </p>
         </div>
         <div class="item-detail-price-row">
@@ -26,48 +34,64 @@
             <div class="item-price-row">
               <p>
                 <span class="item-price-title">B I T 价</span>
-                <span class="item-price">￥{{msg.price}}</span>
+                <span class="item-price">￥{{ msg.price }}</span>
               </p>
             </div>
             <div class="item-price-row">
               <p>
                 <span class="item-price-title">优 惠 价</span>
-                <span class="item-price-full-cut" v-for="(item,index) in goodsInfo.discount" :key="index">{{item}}</span>
+                <span
+                  class="item-price-full-cut"
+                  v-for="(item, index) in goodsInfo.discount"
+                  :key="index"
+                  >{{ item }}</span
+                >
               </p>
             </div>
             <div class="item-price-row">
               <p>
-                <span class="item-price-title">促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销</span>
-                <span class="item-price-full-cut" v-for="(item,index) in goodsInfo.promotion" :key="index">{{item}}</span>
+                <span class="item-price-title"
+                  >促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销</span
+                >
+                <span
+                  class="item-price-full-cut"
+                  v-for="(item, index) in goodsInfo.promotion"
+                  :key="index"
+                  >{{ item }}</span
+                >
               </p>
             </div>
           </div>
         </div>
 
         <div class="add-buy-car-number">
-          <br>
+          <br />
           <row>
             <i-col span="12">
               <p style="text-align: center;border-right: 2px dotted #ccc ">
-                累计购买:<span class="item-remarks-num">{{msg.saleNum}} 个</span>
+                累计购买:<span class="item-remarks-num"
+                  >{{ msg.saleNum }} 个</span
+                >
               </p>
             </i-col>
             <i-col span="12">
               <p style="text-align: center">
-                累计评价:<span class="item-remarks-num">{{msg.collectNum}} 条</span>
+                累计评价:<span class="item-remarks-num"
+                  >{{ msg.collectNum }} 条</span
+                >
               </p>
             </i-col>
           </row>
 
-          <br>
+          <br />
         </div>
-        <br><br>
+        <br /><br />
         <row>
           <i-col span="3">
-          <InputNumber :min="1" v-model="count" size="large"></InputNumber>
+            <InputNumber :min="1" v-model="count" size="large"></InputNumber>
           </i-col>
           <i-col span="12">
-          <p style="padding-top:2px;font-size: 20px">库存{{msg.stock}}</p>
+            <p style="padding-top:2px;font-size: 20px">库存{{ msg.stock }}</p>
           </i-col>
         </row>
 
@@ -90,21 +114,21 @@
 </template>
 
 <script>
-import store from '@/vuex/store';
-import { mapState, mapActions } from 'vuex';
+import store from "@/vuex/store";
+import { mapState, mapActions } from "vuex";
 export default {
-  name: 'ShowGoods',
+  name: "ShowGoods",
   props: {
     msg: {
-      default: ''
+      default: ""
     },
     imgs: {
-      default: ''
+      default: ""
     }
   },
-  data () {
+  data() {
     return {
-      beforeImg: 'http://img14.360buyimg.com/n1/',
+      beforeImg: "",
       price: 0,
       count: 1,
       selectBoxIndex: 0,
@@ -112,43 +136,43 @@ export default {
     };
   },
   computed: {
-    ...mapState(['goodsInfo']),
-    hirePurchase () {
-      const three = this.price * this.count / 3;
-      const sex = this.price * this.count / 6;
-      const twelve = this.price * this.count / 12 * 1.0025;
-      const twentyFour = this.price * this.count / 24 * 1.005;
+    ...mapState(["goodsInfo"]),
+    hirePurchase() {
+      const three = (this.price * this.count) / 3;
+      const sex = (this.price * this.count) / 6;
+      const twelve = ((this.price * this.count) / 12) * 1.0025;
+      const twentyFour = ((this.price * this.count) / 24) * 1.005;
       return [
         {
-          tooltip: '无手续费',
-          type: '不分期'
+          tooltip: "无手续费",
+          type: "不分期"
         },
         {
-          tooltip: '无手续费',
+          tooltip: "无手续费",
           type: `￥${three.toFixed(2)} x 3期`
         },
         {
-          tooltip: '无手续费',
+          tooltip: "无手续费",
           type: `￥${sex.toFixed(2)} x 6期`
         },
         {
-          tooltip: '含手续费：费率0.25%起，￥0.1起×12期',
+          tooltip: "含手续费：费率0.25%起，￥0.1起×12期",
           type: `￥${twelve.toFixed(2)} x 12期`
         },
         {
-          tooltip: '含手续费：费率0.5%起，￥0.1起×12期',
+          tooltip: "含手续费：费率0.5%起，￥0.1起×12期",
           type: `￥${twentyFour.toFixed(2)} x 24期`
         }
       ];
     }
   },
   methods: {
-    ...mapActions(['addShoppingCart']),
-    select (index1, index2) {
+    ...mapActions(["addShoppingCart"]),
+    select(index1, index2) {
       this.selectBoxIndex = index1 * 3 + index2;
       this.price = this.goodsInfo.setMeal[index1][index2].price;
     },
-    showBigImg (index) {
+    showBigImg(index) {
       this.imgIndex = index;
     },
     // addShoppingCartBtn () {
@@ -204,7 +228,7 @@ export default {
       });
     }
   },
-  mounted () {
+  mounted() {
     const father = this;
     setTimeout(() => {
       father.price = father.goodsInfo.setMeal[0][0].price || 0;

@@ -4,7 +4,6 @@ ajax请求函数模块
  */
 import axios from "axios";
 
-
 export default function ajax(url, data = {}, type = "GET") {
   return new Promise(function(resolve, reject) {
     // 执行异步ajax请求
@@ -27,6 +26,11 @@ export default function ajax(url, data = {}, type = "GET") {
     }
     promise
       .then(function(response) {
+        if (response.data.data.code == 401) {
+          // this.$Message.error(response.data.data.msg);
+          // thia.$router.push("/Login");
+        }
+
         // 成功了调用resolve()
         resolve(response.data);
       })

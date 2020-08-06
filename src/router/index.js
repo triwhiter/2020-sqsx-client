@@ -21,13 +21,26 @@ const MyShoppingCart = resolve => require(['@/components/home/MyShoppingCart'], 
 const UserInfo = resolve => require(['@/components/home/UserInfo'], resolve);
 const Merchant = resolve => require(['@/components/Merchant'], resolve);
 const GoodsListNav = resolve => require(['@/components/nav/GoodsListNav.vue'], resolve);
+const NoPage = resolve => require(['@/components/404'], resolve);
+const NoPower = resolve => require(['@/components/403'], resolve);
 Vue.use(Router);
 
 export default new Router({
-  routes: [{
-      path: '/', // 首页
-      name: 'Index',
+  routes: [
+    {
+      path: "/", // 首页
+      name: "Index",
       component: Index
+    },
+    {
+      path: '/404',
+      name: 'NoPage',
+      component: NoPage
+    },
+    {
+      path: '/403',
+      name: 'NoPower',
+      component: NoPower
     },
     {
       path: '/GoodsListNav',
@@ -35,124 +48,136 @@ export default new Router({
       component: GoodsListNav
     },
     {
-      path: '/Login', // 登录
-      name: 'Login',
+      path: "/Login", // 登录
+      name: "Login",
       component: Login
     },
     {
-      path: '/SignUp', // 注册
-      name: 'SignUp',
+      path: "/SignUp", // 注册
+      name: "SignUp",
       component: SignUp,
-      children: [{
-          path: '/',
-          name: 'index',
+      children: [
+        {
+          path: "/",
+          name: "index",
           component: CheckPhone
         },
         {
-          path: 'checkPhone',
-          name: 'CheckPhone',
+          path: "checkPhone",
+          name: "CheckPhone",
           component: CheckPhone
         },
         {
-          path: 'inputInfo',
-          name: 'InputInfo',
+          path: "inputInfo",
+          name: "InputInfo",
           component: InputInfo
         },
         {
-          path: 'signUpDone',
-          name: 'SignUpDone',
+          path: "signUpDone",
+          name: "SignUpDone",
           component: SignUpDone
         }
       ]
     },
     {
-      path: '/goodsList', // 商品列表
-      name: 'GoodsList',
+      path: "/goodsList", // 商品列表
+      name: "GoodsList",
       component: GoodsList
     },
     {
-      path: '/goodsDetail', // 商品详情
-      name: 'GoodsDetail',
+      path: "/goodsDetail", // 商品详情
+      name: "GoodsDetail",
       component: GoodsDetail
     },
     {
-      path: '/shoppingCart', // 商品详情
-      name: 'ShoppingCart',
-      component: ShoppingCart,
+      path: "/shoppingCart", // 商品详情
+      name: "ShoppingCart",
+      component: ShoppingCart
     },
     {
-      path: '/order', // 订单页面
-      name: 'Order',
-      component: Order
+      path: "/order", // 订单页面
+      name: "Order",
+      component: Order,
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      }
     },
     {
-      path: '/pay', // 支付页面
-      name: 'Pay',
-      component: Pay
+      path: "/pay", // 支付页面
+      name: "Pay",
+      component: Pay,
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      }
     },
     {
-      path: '/payDone', // 支付成功页面
-      name: 'PayDone',
-      component: PayDone
+      path: "/payDone", // 支付成功页面
+      name: "PayDone",
+      component: PayDone,
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      }
     },
     {
-      path: '/freeback', // 反馈页面
-      name: 'Freeback',
-      component: Freeback
+      path: "/freeback", // 反馈页面
+      name: "Freeback",
+      component: Freeback,
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      }
     },
     {
-      path: '/home', // 主页
-      name: 'Home',
+      path: "/home", // 主页
+      name: "Home",
       component: Home,
       meta: {
         requiresAuth: true
       },
 
-
-      children: [{
-          path: '/',
-          name: 'HomeIndex',
+      children: [
+        {
+          path: "/",
+          name: "HomeIndex",
           component: MyOrder,
           meta: {
             requiresAuth: true
-          },
-
+          }
         },
         {
-          path: 'UserInfo',
-          name: 'UserInfo',
+          path: "UserInfo",
+          name: "UserInfo",
           component: UserInfo,
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'myAddress',
-          name: 'MyAddress',
+          path: "myAddress",
+          name: "MyAddress",
           component: MyAddress,
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'addAddress',
-          name: 'AddAddress',
+          path: "addAddress",
+          name: "AddAddress",
           component: AddAddress,
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'myOrder',
-          name: 'MyOrder',
+          path: "myOrder",
+          name: "MyOrder",
           component: MyOrder,
           meta: {
             requiresAuth: true
           }
         },
         {
-          path: 'myShoppingCart',
-          name: 'MyShoppingCart',
+          path: "myShoppingCart",
+          name: "MyShoppingCart",
           component: MyShoppingCart,
           meta: {
             requiresAuth: true
@@ -161,10 +186,9 @@ export default new Router({
       ]
     },
     {
-      path: '/merchant',
-      name: 'Merchant',
+      path: "/merchant",
+      name: "Merchant",
       component: Merchant
     }
-  ],
-
+  ]
 });

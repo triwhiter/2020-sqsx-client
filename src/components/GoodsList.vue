@@ -40,10 +40,12 @@
               <div class="goods-show-img">
                 <router-link
                   :to="{ name: 'GoodsDetail', query: { pid: item.productId } }"
-                  ><img
-                    :src="beforeImg + item.imgUrl[0]"
+                >
+                  <img
+                    v-lazy="item.imgUrl[0]"
                     style="width: 100%;height: 100%;"
-                /></router-link>
+                  />
+                </router-link>
               </div>
               <div class="goods-show-price">
                 <span>
@@ -102,7 +104,7 @@ export default {
       pageSize: 10,
       index: 1,
       cid: 0,
-      beforeImg: "http://img14.360buyimg.com/n1/",
+      beforeImg: "",
       isAction: [true, false, false],
       icon: ["arrow-up-a", "arrow-down-a", "arrow-down-a"],
       goodsTool: [

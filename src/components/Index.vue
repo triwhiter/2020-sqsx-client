@@ -1,65 +1,96 @@
 <template>
   <div class="container">
-<!--    <Search></Search>-->
+    <!--    <Search></Search>-->
     <HomeNav v-bind:navList="eatList"></HomeNav>
     <!-- 商品显示区域 -->
     <div class="content">
       <!-- 秒杀 -->
       <div class="seckill">
-      <!-- 头部 -->
-      <div class="seckill-head">
-        <div class="seckill-icon">
-          <img src="static/img/index/clock.png">
-        </div>
-        <div class="seckill-text">
-          <span class="seckill-title">限时秒杀</span>
-          <span class="seckill-remarks">总有你想不到的低价</span>
-        </div>
-        <div class="count-down">
-          <span class="count-down-text">当前场次</span>
-          <span class="count-down-num count-down-hour">{{ seckillsHours }}</span>
-          <span class="count-down-point">:</span>
-          <span class="count-down-num count-down-minute">{{ seckillsMinutes }}</span>
-          <span class="count-down-point">:</span>
-          <span class="count-down-num count-down-seconds">{{ seckillsSeconds }}</span>
-          <span class="count-down-text">后结束抢购</span>
-        </div>
-      </div>
-      <!-- 内容 -->
-      <div class="seckill-content">
-        <div class="seckill-item" v-for="(item, index) in top5List" :key="index">
-          <div class="seckill-item-img">
-            <img :src="beforeImg+item.imgUrl" @click="eatDetail(item.productId )">
+        <!-- 头部 -->
+        <div class="seckill-head">
+          <div class="seckill-icon">
+            <img src="static/img/index/clock.png" />
           </div>
-          <div class="seckill-item-info">
-            <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
-            <p>
-              <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.promotePrice}}</span>
-              <span class="seckill-old-price"><s>{{item.price}}</s></span>
-            </p>
+          <div class="seckill-text">
+            <span class="seckill-title">限时秒杀</span>
+            <span class="seckill-remarks">总有你想不到的低价</span>
+          </div>
+          <div class="count-down">
+            <span class="count-down-text">当前场次</span>
+            <span class="count-down-num count-down-hour">{{
+              seckillsHours
+            }}</span>
+            <span class="count-down-point">:</span>
+            <span class="count-down-num count-down-minute">{{
+              seckillsMinutes
+            }}</span>
+            <span class="count-down-point">:</span>
+            <span class="count-down-num count-down-seconds">{{
+              seckillsSeconds
+            }}</span>
+            <span class="count-down-text">后结束抢购</span>
           </div>
         </div>
+        <!-- 内容 -->
+        <div class="seckill-content">
+          <div
+            class="seckill-item"
+            v-for="(item, index) in top5List"
+            :key="index"
+          >
+            <div class="seckill-item-img">
+              <img v-lazy="item.imgUrl[0]" @click="eatDetail(item.productId)" />
+            </div>
+            <div class="seckill-item-info">
+              <p style="width: 155px;height: 52px; overflow: hidden">
+                {{ item.intro }}
+              </p>
+              <p>
+                <span class="seckill-price text-danger"
+                  ><Icon type="social-yen"></Icon>{{ item.promotePrice }}</span
+                >
+                <span class="seckill-old-price"
+                  ><s>{{ item.price }}</s></span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-<!--      循环测试-->
-      <div>{{eat.code}}</div>
-      <div v-for="(item1, index1) in eatList"  :key='index1' >
+      <!--      循环测试-->
+      <div>{{ eat.code }}</div>
+      <div v-for="(item1, index1) in eatList" :key="index1">
         <div class="seckill">
           <!-- 头部 -->
-          <div :class="cssList[index1%4]">
-            <span class="item-class-title">{{item1.cname}}</span>
+          <div :class="cssList[index1 % 4]">
+            <span class="item-class-title">{{ item1.cname }}</span>
           </div>
           <!-- 内容 -->
           <div class="seckill-content">
-            <div class="seckill-item" v-for="(item, index) in item1.products" :key="index" v-if="index<=4" >
+            <div
+              class="seckill-item"
+              v-for="(item, index) in item1.products"
+              :key="index"
+              v-if="index <= 4"
+            >
               <div class="seckill-item-img">
-                <img :src="beforeImg+item.imgUrl" @click="eatDetail(item.productId )">
+                <img
+                  v-lazy="item.imgUrl[0]"
+                  @click="eatDetail(item.productId)"
+                />
               </div>
               <div class="seckill-item-info">
-                <p style="width: 155px;height: 52px; overflow: hidden">{{item.intro}}</p>
+                <p style="width: 155px;height: 52px; overflow: hidden">
+                  {{ item.intro }}
+                </p>
                 <p>
-                  <span class="seckill-price text-danger"><Icon type="social-yen"></Icon>{{item.promotePrice}}</span>
-                  <span class="seckill-old-price"><s>{{item.price}}</s></span>
+                  <span class="seckill-price text-danger"
+                    ><Icon type="social-yen"></Icon
+                    >{{ item.promotePrice }}</span
+                  >
+                  <span class="seckill-old-price"
+                    ><s>{{ item.price }}</s></span
+                  >
                 </p>
               </div>
             </div>
@@ -71,13 +102,13 @@
 </template>
 
 <script>
-import Search from '@/components/Search';
-import HomeNav from '@/components/nav/HomeNav';
-import store from '@/vuex/store';
-import { mapState, mapActions, mapGetters, mapMutations } from 'vuex';
+import Search from "@/components/Search";
+import HomeNav from "@/components/nav/HomeNav";
+import store from "@/vuex/store";
+import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 export default {
-  name: 'Index',
-  created () {
+  name: "Index",
+  created() {
     this.loadSeckillsInfo();
     this.loadCarouselItems();
     this.loadEat();
@@ -85,76 +116,77 @@ export default {
     this.loadEatDetail();
     this.loadTop5Detail();
   },
-  mounted () {
+  mounted() {
     const father = this;
-    this.setIntervalObj = setInterval(function () {
+    this.setIntervalObj = setInterval(function() {
       father.REDUCE_SECKILLS_TIME();
     }, 1000);
   },
-  data () {
+  data() {
     return {
       setIntervalObj: null,
       top5List: [],
-      beforeImg: 'http://img14.360buyimg.com/n1/',
       eatList: [],
-      cssList: ['item-class-head',
-        'item-class-head1',
-        'item-class-head2',
-        'item-class-head3',
-        'item-class-head4']
+      cssList: [
+        "item-class-head",
+        "item-class-head1",
+        "item-class-head2",
+        "item-class-head3",
+        "item-class-head4"
+      ]
     };
   },
   methods: {
-    ...mapActions(['loadSeckillsInfo', 'loadCarouselItems', 'loadComputer', 'loadEat', 'loadShoppingCart']),
-    ...mapMutations(['REDUCE_SECKILLS_TIME']),
-    loadEatDetail () {
+    ...mapActions([
+      "loadSeckillsInfo",
+      "loadCarouselItems",
+      "loadComputer",
+      "loadEat",
+      "loadShoppingCart"
+    ]),
+    ...mapMutations(["REDUCE_SECKILLS_TIME"]),
+    loadEatDetail() {
       const _this = this;
-      this.$http
-        .get('/products/allinCate')
-        .then(resp => {
-          console.log(resp);
-          let res = resp.data.data;
-          _this.eatList = res;
-          if (res.code === 200) {
-            console.log(res);
-
-          } else {
-            this.$Message.error(res.msg);
-          }
-        });
+      this.$http.get("/products/allinCate").then(resp => {
+        console.log(resp);
+        let res = resp.data.data;
+        _this.eatList = res;
+        if (res.code === 200) {
+          console.log(res);
+        } else {
+          this.$Message.error(res.msg);
+        }
+      });
     },
-    loadTop5Detail () {
+    loadTop5Detail() {
       const _this = this;
-      this.$http
-        .get('/products/top5')
-        .then(resp => {
-          console.log(resp);
-          let res = resp.data.data;
-          _this.top5List = res;
-          if (res.code === 200) {
-            console.log(res);
-
-          } else {
-            this.$Message.error(res.msg);
-          }
-        });
+      this.$http.get("/products/top5").then(resp => {
+        console.log(resp);
+        let res = resp.data.data;
+        _this.top5List = res;
+        if (res.code === 200) {
+          console.log(res);
+        } else {
+          this.$Message.error(res.msg);
+        }
+      });
     },
-    eatDetail (productId) {
+    eatDetail(productId) {
       this.$router.push({
-        path: '/goodsDetail',
+        path: "/goodsDetail",
         query: { productId: productId }
       });
     }
   },
   computed: {
-    ...mapState([ 'seckills', 'computer', 'eat' ]),
-    ...mapGetters([ 'seckillsHours', 'seckillsMinutes', 'seckillsSeconds' ])
+    ...mapState(["seckills", "computer", "eat"]),
+    ...mapGetters(["seckillsHours", "seckillsMinutes", "seckillsSeconds"])
   },
   components: {
     Search,
     HomeNav
   },
-  destroyed () {
+  destroyed() {
     clearInterval(this.setIntervalObj);
   },
   store
@@ -163,7 +195,7 @@ export default {
 
 <style scoped>
 .container {
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   padding-top: 20px;
 }
 .content {
@@ -317,7 +349,7 @@ export default {
 .item-class-head2 {
   width: 100%;
   height: 50px;
-  background-color: #963CA7;
+  background-color: #963ca7;
 }
 .item-class-head3 {
   width: 100%;

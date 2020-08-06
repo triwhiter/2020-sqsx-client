@@ -67,7 +67,7 @@ export default {
   methods: {
     ...mapActions(["loadGoodsInfo"]),
     getDetail(productId) {
-      const _this = this;
+      let father = this;
       this.$http.get("/products/" + productId).then(resp => {
         console.log(resp);
         let res = resp.data.data;
@@ -75,6 +75,9 @@ export default {
         if (res.code === 200) {
           console.log(res);
         } else {
+          if (res.code == 404) {
+            father.$router.push("/404");
+          }
           this.$Message.error(res.msg);
         }
       });

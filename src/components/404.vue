@@ -1,7 +1,7 @@
 <template>
-  <div style="width: 100%; height: 50%;">
+  <div style="width: 100%; height: 50%;text-align: center;">
     <HomeNav v-bind:navList="eatList"></HomeNav>
-    <img src="../../static/404.jpg" style="width: 100%;"/>
+    <img src="../../static/404.png" style="width: 50%;"/>
   </div>
 
 </template>

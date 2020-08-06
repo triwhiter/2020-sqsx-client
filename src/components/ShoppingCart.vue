@@ -12,11 +12,11 @@
           </div>
           <div class="add-info-box-row">
             <div class="add-info-img">
-              <img :src="newShoppingCart.package.img" alt="">
+              <img :src="beforeImg+detail.imgUrl" alt="">
             </div>
             <div class="add-info-intro">
-              <p>{{newShoppingCart.title}} {{newShoppingCart.package.intro}}...</p>
-              <p class="add-info-intro-detail">颜色：{{newShoppingCart.package.intro}}/ 数量：{{newShoppingCart.count}}</p>
+              <p>{{detail.intro}}...</p>
+              <p class="add-info-intro-detail">店名：{{detail.shopName}}/ 数量：{{count}}</p>
             </div>
           </div>
         </div>
@@ -24,7 +24,7 @@
           <div></div>
           <div class="car-btn-row">
             <router-link to="/goodsDetail">
-              <button class="btn-car btn-car-to-detail">查看商品详情</button>
+              <button class="btn-car btn-car-to-detail" @click="eatDetail(productId)">查看商品详情</button>
             </router-link>
             <router-link to="/order">
               <button class="btn-car btn-car-to-pay">去购物车结算 > </button>
@@ -33,61 +33,81 @@
         </div>
       </div>
     </div>
-    <div class="other-user-buy-box">
-      <div class="other-user-buy-title">
-        <p>可以顺便看下其他商品哦 ~</p>
-      </div>
-      <div class="other-user-buy-row" v-for="(items,index1) in recommend" :key="index1">
-        <div class="other-user-buy-item-box" v-for="(item,index2) in items" :key="index2">
-          <div class="other-user-buy-item-img">
-            <a href="item_detail.html"><img :src="item.img" alt=""></a>
-          </div>
-          <div class="other-buy-detail-box">
-            <div class="other-buy-title">
-              <a href="item_detail.html">
-                <p>{{item.intro}}</p>
-              </a>
-            </div>
-            <div class="other-buy-price">
-              <p>￥{{item.price}}</p>
-            </div>
-            <div class="other-buy-btn-box">
-              <router-link to="/goodsDetail">
-                <button class="other-buy-btn"><Icon type="ios-cart"></Icon> 加入购物车</button>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div class="other-user-buy-box">-->
+<!--      <div class="other-user-buy-title">-->
+<!--        <p>可以顺便看下其他商品哦 ~</p>-->
+<!--      </div>-->
+<!--      <div class="other-user-buy-row" v-for="(items,index1) in recommend" :key="index1">-->
+<!--        <div class="other-user-buy-item-box" v-for="(item,index2) in items" :key="index2">-->
+<!--          <div class="other-user-buy-item-img">-->
+<!--            <a href="item_detail.html"><img :src="item.img" alt=""></a>-->
+<!--          </div>-->
+<!--          <div class="other-buy-detail-box">-->
+<!--            <div class="other-buy-title">-->
+<!--              <a href="item_detail.html">-->
+<!--                <p>{{item.intro}}</p>-->
+<!--              </a>-->
+<!--            </div>-->
+<!--            <div class="other-buy-price">-->
+<!--              <p>￥{{item.price}}</p>-->
+<!--            </div>-->
+<!--            <div class="other-buy-btn-box">-->
+<!--              <router-link to="/goodsDetail">-->
+<!--                <button class="other-buy-btn"><Icon type="ios-cart"></Icon> 加入购物车</button>-->
+<!--              </router-link>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
 <script>
 import Search from '@/components/Search';
 import GoodsListNav from '@/components/nav/GoodsListNav';
-import store from '@/vuex/store';
-import { mapState, mapActions } from 'vuex';
 export default {
   name: 'ShoppingCart',
-  beforeRouteEnter (to, from, next) {
-    window.scrollTo(0, 0);
-    next();
+  data() {
+    return {
+      beforeImg: 'http://img14.360buyimg.com/n1/',
+      count: 0,
+      productId: 0,
+      detail: []
+    };
   },
   created () {
-    this.loadRecommend();
-  },
-  computed: {
-    ...mapState(['newShoppingCart', 'recommend'])
+    this.productId = this.$route.query.data.pid;
+    this.count = this.$route.query.data.shopcartNum;
+    this.getDetail(this.productId);
   },
   methods: {
-    ...mapActions(['loadRecommend'])
+    getDetail (productId) {
+      const _this = this;
+      this.$http
+        .get('/products/' + productId)
+        .then(resp => {
+          console.log(resp);
+          let res = resp.data.data;
+          _this.detail = res;
+          if (res.code === 200) {
+            console.log(res);
+          } else {
+            this.$Message.error(res.msg);
+          }
+        });
+    },
+    eatDetail (productId) {
+      this.$router.push({
+        path: '/goodsDetail',
+        query: { productId: productId }
+      });
+    }
   },
   components: {
     Search,
     GoodsListNav
-  },
-  store
+  }
 };
 </script>
 

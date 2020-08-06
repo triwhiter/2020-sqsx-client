@@ -42,10 +42,10 @@
         </li>
         <li>
           <Dropdown  placement="bottom-start">
-            <a href="javascript:void(0)">
+            <a @click="toShoppingCart">
               <Icon type="ios-cart-outline"></Icon> 购物车
             </a>
-            <DropdownMenu slot="list">
+            <!-- <DropdownMenu slot="list">
               <div class="shopping-cart-null" v-show="shoppingCart.length <= 0">
                 <Icon type="ios-cart-outline" class="cart-null-icon"></Icon>
                 <span>你的购物车没有空空哦</span>
@@ -85,7 +85,7 @@
                 </div>
               </div>
             </DropdownMenu>
-          </Dropdown>
+          --></Dropdown>
         </li>
         <li><router-link to="/">网站导航</router-link></li>
 <!--        <li><router-link to="/freeback">意见反馈</router-link></li>-->
@@ -128,8 +128,11 @@ export default {
     myInfo () {
       this.$router.push({
         path:"/home",
-       
+
       });
+    },
+    toShoppingCart() {
+      this.$router.push('/home/myShoppingCart');
     },
     signOutFun () {
       this.signOut();

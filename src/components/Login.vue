@@ -18,7 +18,7 @@
                   v-model="formDate.username"
                   clearable
                   size="large"
-                  placeholder="用户名"
+                  placeholder="手机号"
                 >
                   <Icon type="person" slot="prepend"></Icon>
                 </i-input>
@@ -64,7 +64,7 @@ export default {
       },
       ruleInline: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: "请输入电话号码", trigger: "blur" }
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -89,6 +89,7 @@ export default {
             let res = response.data;
             console.log(res);
             if (res.code === 200) {
+
               this.$Message.success(res.msg);
               this.login(res.data);
               father.$router.push("/");

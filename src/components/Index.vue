@@ -344,7 +344,7 @@ export default {
 .item-class-head1 {
   width: 100%;
   height: 50px;
-  background-color: #fffe1b;
+  background-color: #e3613ae6;
 }
 .item-class-head2 {
   width: 100%;
@@ -416,8 +416,8 @@ export default {
   padding: 6px;
   margin-left: 15px;
   font-size: 12px;
-  background-color: #6da6be;
-  border: 1px solid #6da6be;
+  background-color: #e3613ae6;
+  border: 1px solid #e3613ae6;
   text-decoration: none;
   color: #fff;
 }

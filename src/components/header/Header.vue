@@ -34,7 +34,7 @@
           <Dropdown>
             <div class="username-p" style="display: flex;">
               <!-- <Avatar class="person-icon" icon="person" size="small" /> -->
-              <span style="margin: 5px 5px 0 0;"><img :src="userInfo.avatar"  style="width: 20px ; height: 20px; "/></span>
+              <span style="margin: 5px 5px 0 0;"><img :src="avatar"  style="width: 20px ; height: 20px; "/></span>
               <span class="username">{{userInfo.nickName}} </span>
             </div>
             <DropdownMenu slot="list">
@@ -121,10 +121,11 @@
     name: 'M-Header',
     created() {
       this.isLogin();
-      console.log(userInfo);
+      this.getAvatar();
     },
     data() {
       return {
+        avatar:"",
         city: '宜昌',
         cityArr: [
           ['北京', '上海', '天津', '重庆', '广州'],
@@ -142,6 +143,16 @@
       changeCity(city) {
         this.city = city;
       },
+      getAvatar:function(){
+        this.$http
+        .get("/user/getUserInfo")
+        .then(resp =>{
+          if(resp.data.code == 200){
+            this.avatar = resp.data.data.avatar
+          }
+        })
+      },
+
       goToPay() {
         this.$router.push('/order');
       },

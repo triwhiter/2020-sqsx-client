@@ -88,7 +88,14 @@
       const _this = this
       let user = sessionStorage.getItem('loginInfo');
       let userin = (JSON.parse(user));
-      _this.ava = userin.avatar;
+      _this.$http
+      .get("/user/getUserInfo")
+      .then(resp => {
+        if(resp.data.code == 200){
+          _this.ava = resp.data.data.avatar;
+        }
+      })
+      
       _this.nickname = userin.nickName;
       console.log("userin" + userin)
     }

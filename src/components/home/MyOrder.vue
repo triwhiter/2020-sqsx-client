@@ -27,8 +27,8 @@
         // }
         ],
         total:10,
-        pageSize:1,
-
+        pageNo: 1,
+        pageSize:10,
         columns: [{
             title: '订单号',
             key: 'id',
@@ -50,9 +50,9 @@
         {
           title: '图片',
           key: 'img_url',
-    
+          width: 220,
           render: (h, params) => {
-            return h('div',{style:{width:'10%',height:'10%',background:'#ccc'}}, [
+            return h('div', [
               h('img', {
                 attrs: {
                   src: params.row.img_url
@@ -60,9 +60,6 @@
               })
             ]);
           },
-          // render:(h,params)=>{
-          //      return h('div',{style:{width:'100px',height:'100px',background:'#ccc'}},[h('p','内容2')],'内容1')
-          // }
           align: 'center'
         },
 
@@ -88,59 +85,50 @@
       };
     },
     methods:{
-      change:function(current){
-        console.log(current)
+      getData() {
         let user = sessionStorage.getItem('loginInfo');
         let userin = (JSON.parse(user));
+        this.pageSize = 10;
         this.$http
-        .get('/orderList/getOrderInfoPage/'+userin.id+'/'+current+'/6')
+        .get('/orderList/getOrderInfoPage/'+userin.id+'/'+this.pageNo +'/' + this.pageSize)
         .then(resp => {
+          console.log(resp);
           if(resp.data.code == 200){
             console.log("查询成功")
             console.log(resp.data.data)
-            this.total = resp.data.data.totalPages;
+            this.total = resp.data.data[0].total;
             this.pageSize = resp.data.data.size;
             this.order = resp.data.data;
+            console.log(this.order);
+            this.order.forEach(item => {
+              item.img_url = item.img_url;
+              item.img_url = "http://img14.360buyimg.com/n5/"+item.img_url.split('n1/')[1];
+            });
           }
         })
-
+      },
+      change(current) {
+        // console.log(current)
+        // let user = sessionStorage.getItem('loginInfo');
+        // let userin = (JSON.parse(user));
+        // this.$http
+        // .get('/orderList/getOrderInfoPage/'+userin.id+'/'+current+'/6')
+        // .then(resp => {
+        //   if(resp.data.code == 200){
+        //     console.log("查询成功")
+        //     console.log(resp.data.data)
+        //     this.total = resp.data.data.totalPages;
+        //     this.pageSize = resp.data.data.size;
+        //     this.order = resp.data.data;
+        //   }
+        // })
+        console.log(current);
+        this.pageNo = current;
+        this.getData();
       }
     },
-
-    created: function() {
-
-      const _this = this;
-      let user = sessionStorage.getItem('loginInfo');
-      let userin = (JSON.parse(user));
-
-      // _this.$http
-      //   .get('/orderList/getOrderInfo/' + userin.id)
-      //   .then(resp => {
-      //     console.log("打印order")
-      //     console.log(resp.data.data)
-      //     _this.total = resp.data.data.length
-
-
-      //     _this.order = resp.data.data
-
-
-      //   })
-
-      _this.$http
-      .get('/orderList/getOrderInfoPage/'+userin.id+'/1' +'/6')
-      .then(resp => {
-        if(resp.data.code == 200){
-          console.log("查询成功")
-          console.log(resp.data.data)
-          _this.total = resp.data.data.totalPages;
-          _this.pageSize = resp.data.data.size;
-          _this.order = resp.data.data;
-          _this.order.forEach(item => {
-            item.img_url = item.img_url;
-            item.img_url = "http://img14.360buyimg.com/n5/"+item.img_url.split('n1/')[1];
-          });
-        }
-      })
+    created() {
+     this.getData();
     }
   };
 </script>

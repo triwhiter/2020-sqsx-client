@@ -82,7 +82,7 @@ export default {
     ...mapMutations(["SET_USER_LOGIN_INFO"]),
     ...mapActions(["login"]),
     handleSubmit(name) {
-      const father = this;
+      let father = this;
       this.$refs[name].validate(valid => {
         if (valid) {
           this.$http.post("/login", this.formDate).then(response => {

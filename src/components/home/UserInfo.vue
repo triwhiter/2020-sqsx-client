@@ -75,7 +75,6 @@
     data() {
       return {
         token: '',
-
         formData: {
           nickName: '',
           userName: '',

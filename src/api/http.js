@@ -29,18 +29,19 @@ Axios.interceptors.response.use(
     switch (resp.data.code) {
       //响应拦截
       case 404:
+        alert("测试");
         router.replace({
-          path: "404",
+          path: "/404",
           query: { redirect: to.fullPath }
         });
       case 500:
         router.replace({
-          path: "500",
+          path: "/500",
           query: { redirect: to.fullPath }
         });
       case 403:
         router.replace({
-          path: "403",
+          path: "/403",
           query: { redirect: to.fullPath }
         });
       default:

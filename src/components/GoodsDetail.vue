@@ -98,17 +98,6 @@ export default {
         }
       });
     },
-    getImg(productId) {
-      this.$http.get("/productImage/" + productId).then(resp => {
-        console.log(resp);
-        let res = resp.data.data;
-        this.img = res;
-        if (res.code === 200) {
-          console.log(res);
-        } else {
-          this.$Message.error(res.msg);
-        }
-      });
     getImg (productId) {
       this.$http
         .get('/productImage/' + productId)

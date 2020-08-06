@@ -175,7 +175,7 @@ export default {
         .then(resp => {
           console.log(resp);
           let res = resp.data.data;
-          if (res.code === 200) {
+          if (resp.data.code == 200) {
             console.log(res);
           } else {
             this.$Message.error(res.msg);

@@ -16,20 +16,24 @@ Vue.config.productionTip = false;
 //   next();
 // });
 router.beforeEach((to, from, next) => {
-    let flag = sessionStorage.getItem('loginInfo')
-    if (to.meta.requiresAuth == true) { // 判断跳转的路由是否需要登录
-
-        if (!flag) { // vuex.state判断token是否存在
-            next({
-                path: '/login',
-                query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-            })
-        } else {
-            return next();
+  let flag = sessionStorage.getItem('loginInfo')
+  // 判断跳转的路由是否需要登录
+  if (to.meta.requiresAuth == true) {
+    // 用户是否登录
+    if (!flag) {
+      next({
+        path: '/login',
+        // 将跳转的路由path作为参数，登录成功后跳转到该路由
+        query: {
+          redirect: to.fullPath
         }
+      })
     } else {
-       next()
+      return next();
     }
+  } else {
+    next()
+  }
 })
 
 router.afterEach(route => {
@@ -40,6 +44,8 @@ router.afterEach(route => {
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 });

@@ -29,6 +29,7 @@ import GoodsDetailNav from "@/components/nav/GoodsDetailNav";
 import ShopHeader from "@/components/header/ShopHeader";
 import ShowGoods from "@/components/goodsDetail/ShowGoods";
 import ShowGoodsDetail from "@/components/goodsDetail/ShowGoodsDetail";
+import axios from "axios";
 import store from "@/vuex/store";
 import { mapState, mapActions } from "vuex";
 export default {
@@ -41,7 +42,19 @@ export default {
     // 取出商品列表页中传过来的商品id值
     let pid = this.$route.query.pid;
     var productId = this.$route.query.productId;
+    // let _this = this;
     if (pid == null) {
+      // alert("方法执行前 == nul");
+      // // // this.getDetail(productId);
+      // this.$http.get("/products/" + productId, (async = false)).then(resp => {
+      //   alert("测试");
+      //   if (resp.data.code == 404) {
+      //     alert("详情404");
+      //     _this.$router.push("/404");
+      //   }
+      // });
+      // });
+      // alert("方法执行后");
       this.getDetail(productId);
       this.getImg(productId);
       this.getComment(productId);
@@ -67,16 +80,19 @@ export default {
   methods: {
     ...mapActions(["loadGoodsInfo"]),
     getDetail(productId) {
-      let father = this;
+      let _this = this;
       this.$http.get("/products/" + productId).then(resp => {
-        console.log(resp);
-        let res = resp.data.data;
-        _this.detail = res;
-        if (res.code === 200) {
+        // alert("测试刷新加载");
+        // alert("测试");
+        // console.log(resp);
+        let res = resp.data;
+        _this.detail = res.data;
+        if (res.code == 200) {
           console.log(res);
         } else {
           if (res.code == 404) {
-            father.$router.push("/404");
+            alert("详情404");
+            _this.$router.push("/404");
           }
           this.$Message.error(res.msg);
         }

@@ -29,21 +29,29 @@ Axios.interceptors.response.use(
     switch (resp.data.code) {
       //响应拦截
       case 404:
-        alert("测试");
-        router.replace({
-          path: "/404",
-          query: { redirect: to.fullPath }
-        });
+        // alert("404");
+        location.href = "http://localhost:8080/#/404";
+      // router.replace({
+      //   path: "404",
+      //   query: { redirect: router.currentRoute.fullPath }
+      // });
+      // console.log("测试");
+      // router.replace({
+      //   path: "/404",
+      //   query: { redirect: to.fullPath }
+      // });
       case 500:
-        router.replace({
-          path: "/500",
-          query: { redirect: to.fullPath }
-        });
+        location.href = "http://localhost:8080/#/500";
+      // router.replace({
+      //   path: "/500",
+      //   query: { redirect: to.fullPath }
+      // });
       case 403:
-        router.replace({
-          path: "/403",
-          query: { redirect: to.fullPath }
-        });
+        location.href = "http://localhost:8080/#/403";
+      // router.replace({
+      //   path: "/403",
+      //   query: { redirect: to.fullPath }
+      // });
       default:
         return resp;
     }

@@ -4,11 +4,11 @@
       <div class="add-title">
         <h1>我的资料</h1>
       </div>
-        <div style="margin-left:10px;">
+      <!-- <div style="margin-left:10px;">
         <input ref="imgLocal" class="input-loc-img" name="imgLocal" id="imgLocal" type='file' accept="image/*">
         <span @click="updateer">上传</span>
       </div>
-
+ -->
       <div class="add-box">
         <Form :model="formData" label-position="left" :label-width="100" :rules="ruleInline">
           <FormItem label="昵称" prop="nickName">
@@ -47,7 +47,9 @@
           <FormItem label="性别" prop="integral" hidden="true">
             <i-input v-model="formData.integral" size="large"></i-input>
           </FormItem>
-
+          <FormItem label="性别" prop="deleted" hidden="true">
+            <i-input v-model="formData.deleted" size="large"></i-input>
+          </FormItem>
         </Form>
       </div>
       <div class="add-submit">
@@ -88,6 +90,7 @@
           password: '',
           level: '',
           integral: '',
+          deleted: 0
         },
         ruleInline: {
           userName: [{
@@ -195,18 +198,18 @@
 
           })
       },
-      // getToken: function() {
+      getToken: function() {
 
-      //   this.$http
-      //     .get('/qiniu/token')
-      //     .then(resp => {
-      //       if (resp.data.code == 200) {
-      //         console.log(resp.data.data)
-      //         this.token = resp.data.data.token
-      //       }
+        this.$http
+          .get('/qiniu/token')
+          .then(resp => {
+            if (resp.data.code == 200) {
+              console.log(resp.data.data)
+              this.token = resp.data.data.token
+            }
 
-      //     })
-      // },
+          })
+      },
 
 
     },

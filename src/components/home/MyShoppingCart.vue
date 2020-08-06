@@ -35,7 +35,7 @@
               return h('div', [
                 h('img', {
                   attrs: {
-                    src: 'http://img14.360buyimg.com/n4/' + params.row.img_url
+                    src: params.row.img_url
                   }
                 })
               ]);

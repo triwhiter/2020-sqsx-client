@@ -4,7 +4,7 @@
       <div class="add-title">
         <h1>我的资料</h1>
       </div>
-      <div style="margin-left:10px;">
+    <!--  <div style="margin-left:10px;">
         <input
           ref="imgLocal"
           class="input-loc-img"
@@ -13,8 +13,8 @@
           type="file"
           accept="image/*"
         />
-        <span @click="updateer">上传</span>
-      </div>
+        <span @click="updateer">上传</span> -->
+    <!--  </div> -->
       <Card style="height: 283px;">
         <p slot="title">
           <Icon type="ios-pricetags-outline"></Icon>
@@ -37,7 +37,7 @@
           </div>
         </Upload>
       </Card>
-      <img src="" id="test" alt="返回的图片" />
+      <img :src="this.formData.avatar" id="test" alt="返回的图片" />
       <div class="add-box">
         <Form
           :model="formData"
@@ -108,11 +108,10 @@ export default {
 
   data() {
     return {
-      imgUrl: "测试",
+      backurl:"",
+      imgUrl: "",
       upload: {},
-      token:
-"KoaTCCfQascxp2bfNR1Vhz6Di23AvBKZ_aQdlzbr:PnQzV7n9VJu-LuF-scAHaxQA1KA=:eyJzY29wZSI6InRyaXdoaXRlciIsInJldHVybkJvZHkiOiJ7XCJrZXlcIjpcIiQoa2V5KVwiLFwiaGFzaFwiOlwiJChldGFnKVwiLFwiYnVja2V0XCI6XCIkKGJ1Y2tldClcIixcIndpZHRoXCI6JChpbWFnZUluZm8ud2lkdGgpLCBcImhlaWdodFwiOiR7aW1hZ2VJbmZvLmhlaWdodH19IiwiZGVhZGxpbmUiOjE1OTY3MTI2MTZ9"
- ,
+      token:"KoaTCCfQascxp2bfNR1Vhz6Di23AvBKZ_aQdlzbr:AdZbCfAlPcJkvOlA0TbvhaZtdik=:eyJzY29wZSI6InRyaXdoaXRlciIsInJldHVybkJvZHkiOiJ7XCJrZXlcIjpcIiQoa2V5KVwiLFwiaGFzaFwiOlwiJChldGFnKVwiLFwiYnVja2V0XCI6XCIkKGJ1Y2tldClcIixcIndpZHRoXCI6JChpbWFnZUluZm8ud2lkdGgpLCBcImhlaWdodFwiOiR7aW1hZ2VJbmZvLmhlaWdodH19IiwiZGVhZGxpbmUiOjE1OTY3MTY1NDd9",
       formData: {
         nickName: "",
         userName: "",
@@ -174,6 +173,8 @@ export default {
   },
   methods: {
     upload(url) {
+      console.log("url")
+      console.log(url)
       alert("从Upload组件获取的数据" + url);
       this.formData.avatar = url;
     },
@@ -189,9 +190,10 @@ export default {
     // },
     handleSuccess(request, file, list) {
       console.log(request.key);
+      this.backurl = request.key;
       // console.log(file, list, "上传成功");
       // 这里就能拿到七牛返回的response信息（hash, key)然后拼接服务器地址，就可以访问了
-      // this.formData.avatar = "http://jximg.iboy.tech/" + request.key;
+      this.formData.avatar = "http://jximg.iboy.tech/" + request.key;
 
       let url = "http://jximg.iboy.tech/" + request.key;
       // this.imgUrl = url;
@@ -263,7 +265,7 @@ export default {
       this.$http.get("/user/getUserInfo").then(resp => {
         if (resp.data.code == 200) {
           console.log("修改后");
-          console.log(resp.data);
+          console.log(resp.data.data.avatar);
           this.formData = resp.data;
         }
       });
@@ -285,25 +287,10 @@ export default {
     Distpicker
   },
   created: function() {
-    // const _this = this;
-    // let user = sessionStorage.getItem('loginInfo');
-    // let userin = (JSON.parse(user));
-    // console.log(JSON.parse(user))
-    // _this.formData.nickName = userin.nickName;
-    // _this.formData.userName = userin.userName;
-    // _this.formData.phoneNumber = userin.phoneNumber;
-    // _this.formData.sex = userin.sex;
-    // _this.formData.email = userin.email;
-    // _this.formData.avatar = userin.avatar;
-    // _this.formData.id = userin.id;
-    // _this.formData.level = userin.level;
-    // _this.formData.password = userin.password;
-    // _this.formData.createTime = userin.createTime;
-    // _this.formData.updateTime = userin.updateTime;
-    // _this.formData.integral = userin.integral;
+
     this.$http.get("/user/getUserInfo").then(resp => {
       if (resp.data.code == 200) {
-        console.log(resp.data.data);
+        console.log(resp.data.data.avatar);
         this.formData = resp.data.data;
       }
     });

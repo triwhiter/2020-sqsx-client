@@ -55,7 +55,7 @@
             return h('div', [
               h('img', {
                 attrs: {
-                  src: 'http://img14.360buyimg.com/n4/'+params.row.img_url
+                  src: params.row.img_url
                 }
               })
             ]);
@@ -95,7 +95,7 @@
           if(resp.data.code == 200){
             console.log("查询成功")
             console.log(resp.data.data)
-            this.total = resp.data.data.total/resp.data.data.size;
+            this.total = resp.data.data.totalPages;
             this.pageSize = resp.data.data.size;
 
             this.order = resp.data.data;
@@ -106,7 +106,7 @@
     },
 
     created: function() {
-      console.log(this.order[0].oid)
+
       const _this = this;
       let user = sessionStorage.getItem('loginInfo');
       let userin = (JSON.parse(user));
@@ -130,7 +130,7 @@
         if(resp.data.code == 200){
           console.log("查询成功")
           console.log(resp.data.data)
-          _this.total = resp.data.data.total/resp.data.data.size;
+          _this.total = resp.data.data.totalPages;
           _this.pageSize = resp.data.data.size;
           _this.order = resp.data.data;
         }

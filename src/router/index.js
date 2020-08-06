@@ -99,7 +99,7 @@ export default new Router({
       name: "Order",
       component: Order,
       meta: {
-        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+        requiresAuth: true
       }
     },
     {
@@ -107,24 +107,24 @@ export default new Router({
       name: "Pay",
       component: Pay,
       meta: {
-        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+        requiresAuth: true
       }
     },
     {
       path: "/payDone", // 支付成功页面
       name: "PayDone",
       component: PayDone,
-      meta: {
-        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      }
+     meta: {
+       requiresAuth: true
+     }
     },
     {
       path: "/freeback", // 反馈页面
       name: "Freeback",
       component: Freeback,
-      meta: {
-        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      }
+     meta: {
+       requiresAuth: true
+     }
     },
     {
       path: "/home", // 主页

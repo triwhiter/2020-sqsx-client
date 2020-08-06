@@ -71,7 +71,9 @@ export default {
           console.log(resp);
           let res = resp.data.data;
           _this.detail = res;
-          if (res.code === 200) {
+          // console.log("code")
+          //  console.log(resp.data.code)
+          if (resp.data.code == 200) {
             console.log(res);
           } else {
             this.$Message.error(res.msg);
@@ -85,7 +87,7 @@ export default {
           console.log(resp);
           let res = resp.data.data;
           this.img = res;
-          if (res.code === 200) {
+          if (resp.data.code == 200) {
             console.log(res);
           } else {
             this.$Message.error(res.msg);
@@ -99,7 +101,8 @@ export default {
           console.log(resp);
           let res = resp.data.data;
           this.comment = res;
-          if (res.code === 200) {
+          console.log(res.code)
+          if (resp.data.code == 200) {
             console.log(res);
           } else {
             this.$Message.error(res.msg);

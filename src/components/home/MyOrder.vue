@@ -125,7 +125,7 @@
       //   })
 
       _this.$http
-      .get('/orderList/getOrderInfoPage/'+userin.id+'/2' +'/6')
+      .get('/orderList/getOrderInfoPage/'+userin.id+'/1' +'/6')
       .then(resp => {
         if(resp.data.code == 200){
           console.log("查询成功")

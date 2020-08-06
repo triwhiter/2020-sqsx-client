@@ -3,7 +3,7 @@
     <div class="item-detail-show">
       <div class="item-detail-left">
         <div class="item-detail-big-img">
-          <img :src="imgs[imgIndex].imgUrl" alt="" />
+          <img v-lazy="imgs[imgIndex].imgUrl" alt="" />
         </div>
         <div class="item-detail-img-row">
           <div
@@ -12,7 +12,7 @@
             :key="index"
             @mouseover="showBigImg(index)"
           >
-            <img :src="item.imgUrl" alt="" />
+            <img v-lazy="item.imgUrl" alt="" />
           </div>
         </div>
       </div>

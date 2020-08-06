@@ -28,7 +28,7 @@
               </div>
               <div class="item-intro-img" ref="itemIntroGoods">
                 <img
-                  :src="item.imgUrl"
+                  v-lazy="item.imgUrl"
                   alt=""
                   v-for="(item, index) in imgs"
                   :key="index"

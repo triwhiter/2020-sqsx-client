@@ -97,7 +97,6 @@
             console.log(resp.data.data)
             this.total = resp.data.data.totalPages;
             this.pageSize = resp.data.data.size;
-
             this.order = resp.data.data;
           }
         })
@@ -133,6 +132,10 @@
           _this.total = resp.data.data.totalPages;
           _this.pageSize = resp.data.data.size;
           _this.order = resp.data.data;
+          _this.order.forEach(item => {
+            item.img_url = item.img_url;
+            item.img_url = "http://img14.360buyimg.com/n5/"+item.img_url.split('n1/')[1];
+          });
         }
       })
     }

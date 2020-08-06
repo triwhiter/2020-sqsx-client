@@ -15,7 +15,7 @@
         />
         <span @click="updateer">上传</span> -->
     <!--  </div> -->
-      <Card style="height: 283px;">
+      <Card style="height: 300px;">
         <p slot="title">
           <Icon type="ios-pricetags-outline"></Icon>
           缩略图
@@ -36,8 +36,10 @@
             <Icon type="camera" size="20"></Icon>
           </div>
         </Upload>
+        <br />
+         <img :src="this.formData.avatar" id="test" alt="返回的图片" width="100" height="100" /> 
       </Card>
-      <img :src="this.formData.avatar" id="test" alt="返回的图片" />
+      <br />
       <div class="add-box">
         <Form
           :model="formData"
@@ -272,19 +274,19 @@ export default {
           this.formData = resp.data;
         }
       });
-    }
-    // getToken: function() {
+    },
+    getToken: function() {
 
-    //   this.$http
-    //     .get('/qiniu/token')
-    //     .then(resp => {
-    //       if (resp.data.code == 200) {
-    //         console.log(resp.data.data)
-    //         this.token = resp.data.data.token
-    //       }
+      this.$http
+        .get('/qiniu/token')
+        .then(resp => {
+          if (resp.data.code == 200) {
+            console.log(resp.data.data)
+            this.token = resp.data.data.token
+          }
 
-    //     })
-    // },
+        })
+    },
   },
   components: {
     Distpicker

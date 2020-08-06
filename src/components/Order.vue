@@ -211,6 +211,7 @@ export default {
         if (res.code == 200) {
           res.data.forEach(item => {
             item.img_url = item.img_url;
+            item.img_url = "http://img14.360buyimg.com/n5/"+item.img_url.split('n1/')[1];
           });
           this.shoppingCart = res.data;
         } else {

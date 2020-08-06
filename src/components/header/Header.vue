@@ -121,6 +121,7 @@
     name: 'M-Header',
     created() {
       this.isLogin();
+      console.log(userInfo);
     },
     data() {
       return {
@@ -158,9 +159,6 @@
         this.$Message.success('成功退出！');
         this.$router.push('/Login');
       }
-    },
-    created() {
-      console.log(userInfo)
     },
     store
   };

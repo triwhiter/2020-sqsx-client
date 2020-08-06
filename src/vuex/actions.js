@@ -628,7 +628,7 @@ export const signOut = ({ commit }) => {
 // 判断是否登陆
 export const isLogin = ({ commit }) => {
   console.log('hello I am from login()');
-  const user = sessionStorage.getItem('loginInfo');
+  let user = sessionStorage.getItem('loginInfo');
   if (user) {
     commit('SET_USER_LOGIN_INFO', JSON.parse(user));
   }

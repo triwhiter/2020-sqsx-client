@@ -148,8 +148,11 @@
           console.log("打印cart")
           console.log(resp.data.data)
           _this.dataForm = resp.data.data
-        })
-
+          _this.dataForm.forEach(item => {
+            item.img_url = item.img_url;
+            item.img_url = "http://img14.360buyimg.com/n5/"+item.img_url.split('n1/')[1];            
+          });
+        });
     }
   }
 </script>

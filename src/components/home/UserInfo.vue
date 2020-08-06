@@ -4,10 +4,10 @@
       <div class="add-title">
         <h1>我的资料</h1>
       </div>
-      <!--   <div style="margin-left:10px;">
+        <div style="margin-left:10px;">
         <input ref="imgLocal" class="input-loc-img" name="imgLocal" id="imgLocal" type='file' accept="image/*">
         <span @click="updateer">上传</span>
-      </div> -->
+      </div>
 
       <div class="add-box">
         <Form :model="formData" label-position="left" :label-width="100" :rules="ruleInline">
@@ -89,8 +89,6 @@
           password: '',
           level: '',
           integral: '',
-
-
         },
         ruleInline: {
           userName: [{

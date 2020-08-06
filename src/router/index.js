@@ -21,6 +21,9 @@ const MyShoppingCart = resolve => require(['@/components/home/MyShoppingCart'], 
 const UserInfo = resolve => require(['@/components/home/UserInfo'], resolve);
 const Merchant = resolve => require(['@/components/Merchant'], resolve);
 const GoodsListNav = resolve => require(['@/components/nav/GoodsListNav.vue'], resolve);
+const NoPage = resolve => require(['@/components/404'], resolve);
+const NoPower = resolve => require(['@/components/403'], resolve);
+
 Vue.use(Router);
 
 export default new Router({
@@ -28,6 +31,16 @@ export default new Router({
       path: '/', // 首页
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/404',
+      name: 'NoPage',
+      component: NoPage
+    },
+    {
+      path: '/403',
+      name: 'NoPower',
+      component: NoPower
     },
     {
       path: '/GoodsListNav',

@@ -30,9 +30,15 @@
           {
             title: '图片',
             key: 'img_url',
-            width: 220,
+            
             render: (h, params) => {
-              return h('div', [
+              return h('div', {
+                style: {
+                  width: '10%',
+                  height: '10%',
+                  background: '#ccc'
+                }
+              }, [
                 h('img', {
                   attrs: {
                     src: params.row.img_url

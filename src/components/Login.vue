@@ -2,8 +2,8 @@
   <!-- 登录页面 -->
   <div>
     <Row class="container">
-      <i-col span="13" offset="2" class="login-img-box">
-        <img src="static/img/sale.jpg" alt="" />
+      <i-col span="14" offset="0" class="login-img-box">
+        <img src="../../static/img/bgr.jpg" alt="" />
       </i-col>
       <i-col span="7" class="login-box">
         <div class="login-container">

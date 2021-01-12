@@ -5,7 +5,6 @@
       <template>
         <i-button type="error" @click="delAll">一键删除</i-button>
       </template>
-
       <Button @click="goTo" type="primary">去付款</Button>
     </div>
   </div>
